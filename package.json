@@ -31,9 +31,12 @@
     "prepublishOnly": "npm run check && npm run build",
     "ts": "tsc --target esnext --lib esnext,esnext.asynciterable --module commonjs gulpfile.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fetch-as": "^0.1.1"
+  },
   "devDependencies": {
     "@types/node": "^8.0.57",
+    "@types/node-fetch": "^1.6.7",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-function-bind": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
