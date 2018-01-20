@@ -25,6 +25,9 @@ export declare interface SendAsButtonTemplateParams {
 
 /** Import typings */
 import {
+  FetchAsData,
+} from 'fetch-as';
+import {
   RequestInit,
 } from 'node-fetch';
 import {
@@ -35,7 +38,6 @@ import {
 
 /** Import project dependencies */
 import {
-  FetchAsData,
   fetchAsJson,
 } from 'fetch-as';
 
@@ -103,7 +105,7 @@ export async function sendAsButtonTemplate({
 
     /** NOTE: Throw error response */
     if (d.status > 399) {
-      throw d;
+      throw d.data;
     }
 
     return d.data;

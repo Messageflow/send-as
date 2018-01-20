@@ -1,36 +1,26 @@
 // @ts-check
 
-export declare interface DefaultAction {
-  title: string; /** 20 char limit */
-  url: string;
-  webview_height_ratio?: string | 'full' | 'compact' | 'tall';
-  messenger_extensions?: boolean;
-  fallback_url?: string; /** Required if messenger_extensions is set */
-  webview_share_button?: string | 'hide';
-}
-export declare interface SendAsGenericTemplateMessagePayloadElements {
-  title: string; /** 80 char limit */
-  subtitle?: string; /** 80 char limit */
-  image_url?: string;
-  default_action?: DefaultAction;
-  buttons: (URLButton | PostbackButton)[];
-}
-export declare interface SendAsGenericTemplateMessagePayload {
-  template_type: string | 'generic';
-  shareable?: boolean;
-  image_aspect_ratio?: string | 'horizontal' | 'square';
-  elements: SendAsGenericTemplateMessagePayloadElements[]; /** 10 elem limit */
-}
-export declare interface SendAsGenericTemplateMessage {
-  attachment: {
-    type: string | 'template',
-    payload: SendAsGenericTemplateMessagePayload;
+export declare interface MessageAttachment {
+  type: string; /** 'image' | 'audio' | 'video' | 'file' | 'template' */
+  payload: {
+    [key: string]: any;
   };
 }
-export declare interface SendAsGenericTemplateParams {
+export declare interface MessageQuickReplies {
+  content_type: string; /**  | 'text' | 'location' */
+  title?: string; /** Required if content_type=text & 20 char limit */
+  payload?: string | number; /** Required if content_type=text & 1000 char limit */
+  image_url?: string; /** Minimum 24px x 24px. Larger image will be cropped and resized */
+}
+export declare interface SendAsQuickReplyMessage {
+  text: string | 'text' | 'attachment';
+  quick_replies: MessageQuickReplies[]; /** Up to 11 quick replies */
+  attachment?: MessageAttachment;
+}
+export declare interface SendAsQuickReplyParams {
   url: string;
   recipient: FbEventRecipient;
-  message: SendAsGenericTemplateMessage;
+  message: SendAsQuickReplyMessage;
   notificationType: string
     | 'NO_PUSH'
     | 'REGULAR'
@@ -41,13 +31,13 @@ export declare interface SendAsGenericTemplateParams {
 
 /** Import typings */
 import {
-  FetchAsData
+  FetchAsData,
 } from 'fetch-as';
-import { RequestInit } from 'node-fetch';
+import {
+  RequestInit,
+} from 'node-fetch';
 import {
   FbEventRecipient,
-  PostbackButton,
-  URLButton,
 } from './';
 
 /** Import project dependencies */
@@ -58,14 +48,14 @@ import {
 /** Import other modules */
 import sendAsTypingBubble from './send-as-typing-bubble';
 
-export async function sendAsGenericTemplate({
+export async function sendAsQuickReply({
   url,
   recipient,
   message,
   notificationType,
   typingDelay,
   options,
-}: SendAsGenericTemplateParams) {
+}: SendAsQuickReplyParams) {
   try {
     const fetchOpts = {
       method: 'POST',
@@ -127,4 +117,4 @@ export async function sendAsGenericTemplate({
   }
 }
 
-export default sendAsGenericTemplate;
+export default sendAsQuickReply;

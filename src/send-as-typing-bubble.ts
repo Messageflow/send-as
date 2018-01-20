@@ -51,7 +51,7 @@ export async function sendTypingBubble({
 
     /** NOTE: Throw error response */
     if (d.status > 399) {
-      throw d;
+      throw d.data;
     }
 
     return d.data;
