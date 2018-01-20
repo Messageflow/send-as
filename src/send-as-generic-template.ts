@@ -1,20 +1,36 @@
 // @ts-check
 
-export declare interface SendAsButtonTemplateMessagePayload {
-  template_type: string | 'button';
-  text: string; /** 640 char limit */
-  buttons: (URLButton | PostbackButton)[]; /** 3 btn limit */
+export declare interface DefaultAction {
+  title: string; /** 20 char limit */
+  url: string;
+  webview_height_ratio?: string | 'full' | 'compact' | 'tall';
+  messenger_extensions?: boolean;
+  fallback_url?: string; /** Required if messenger_extensions is set */
+  webview_share_button?: string | 'hide';
 }
-export declare interface SendAsButtonTemplateMessage {
+export declare interface SendAsGenericTemplateMessagePayloadElements {
+  title: string; /** 80 char limit */
+  subtitle?: string; /** 80 char limit */
+  image_url?: string;
+  default_action?: DefaultAction;
+  buttons: (URLButton | PostbackButton)[];
+}
+export declare interface SendAsGenericTemplateMessagePayload {
+  template_type: string | 'generic';
+  shareable?: boolean;
+  image_aspect_ratio?: string | 'horizontal' | 'square';
+  elements: SendAsGenericTemplateMessagePayloadElements[]; /** 10 elem limit */
+}
+export declare interface SendAsGenericTemplateMessage {
   attachment: {
-    type: string | 'template';
-    payload: SendAsButtonTemplateMessagePayload;
+    type: string | 'template',
+    payload: SendAsGenericTemplateMessagePayload;
   };
 }
-export declare interface SendAsButtonTemplateParams {
-  recipient: FbEventRecipient;
-  message: SendAsButtonTemplateMessage;
+export declare interface SendAsGenericTemplateParams {
   url: string;
+  recipient: FbEventRecipient;
+  message: SendAsGenericTemplateMessage;
   notificationType: string
     | 'NO_PUSH'
     | 'REGULAR'
@@ -24,9 +40,6 @@ export declare interface SendAsButtonTemplateParams {
 }
 
 /** Import typings */
-import {
-  RequestInit,
-} from 'node-fetch';
 import {
   FbEventRecipient,
   PostbackButton,
@@ -38,22 +51,30 @@ import {
   FetchAsData,
   fetchAsJson,
 } from 'fetch-as';
+import { RequestInit } from 'node-fetch';
 
 /** Import other modules */
 import sendAsTypingBubble from './send-as-typing-bubble';
 
-export async function sendAsButtonTemplate({
+/** Setting up */
+const fbGraphUrl = process.env.FB_GRAPH_URL;
+const fbPageAccessToken = process.env.FB_PAGE_ACCESS_TOKEN;
+const fbNotificationType = process.env.FB_NOTIFICATION_TYPE;
+const fbTypingBubble = +process.env.FB_TYPING_BUBBLE;
+const appFetchTimeout = +process.env.APP_FETCH_TIMEOUT;
+
+export async function sendAsGenericTemplate({
   url,
   recipient,
   message,
   notificationType,
   typingDelay,
   options,
-}: SendAsButtonTemplateParams) {
+}: SendAsGenericTemplateParams) {
   try {
     const fetchOpts = {
       method: 'POST',
-      compress: options.compress || true,
+      compress: true,
       timeout: options.timeout || 599e3,
       headers: {
         'content-type': 'application/json',
@@ -101,7 +122,6 @@ export async function sendAsButtonTemplate({
       showTyping: false,
     });
 
-    /** NOTE: Throw error response */
     if (d.status > 399) {
       throw d;
     }
@@ -112,4 +132,4 @@ export async function sendAsButtonTemplate({
   }
 }
 
-export default sendAsButtonTemplate;
+export default sendAsGenericTemplate;
