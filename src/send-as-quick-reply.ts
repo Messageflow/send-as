@@ -54,7 +54,7 @@ export async function sendAsQuickReply({
   message,
   notificationType,
   typingDelay,
-  options,
+  options = {},
 }: SendAsQuickReplyParams) {
   try {
     const fetchOpts = {

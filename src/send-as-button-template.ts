@@ -50,7 +50,7 @@ export async function sendAsButtonTemplate({
   message,
   notificationType,
   typingDelay,
-  options,
+  options = {},
 }: SendAsButtonTemplateParams) {
   try {
     const fetchOpts = {

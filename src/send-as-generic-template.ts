@@ -64,7 +64,7 @@ export async function sendAsGenericTemplate({
   message,
   notificationType,
   typingDelay,
-  options,
+  options = {},
 }: SendAsGenericTemplateParams) {
   try {
     const fetchOpts = {

@@ -27,9 +27,9 @@ import {
 export async function sendTypingBubble({
   url,
   recipient,
-  options,
   notificationType,
   showTyping = true,
+  options = {},
 }: SendTypingBubbleParams) {
   try {
     const fetchOpts = {
