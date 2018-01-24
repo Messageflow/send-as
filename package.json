@@ -38,6 +38,7 @@
     "lint": "npm run ts && gulp lint && npm run cleanup",
     "nsp": "nsp check",
     "prepublishOnly": "npm run check && npm run build",
+    "test": "jest --config ./.jestrc.json",
     "ts": "tsc --target esnext --lib esnext,esnext.asynciterable --module commonjs gulpfile.ts"
   },
   "dependencies": {
