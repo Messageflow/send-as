@@ -25,9 +25,6 @@ export declare interface SendAsButtonTemplateParams {
 
 /** Import typings */
 import {
-  FetchAsData,
-} from 'fetch-as';
-import {
   RequestInit,
 } from 'node-fetch';
 import {
@@ -42,6 +39,7 @@ import {
 } from 'fetch-as';
 
 /** Import other modules */
+import runAfter from './run-after';
 import sendAsTypingBubble from './send-as-typing-bubble';
 
 export async function sendAsButtonTemplate({
@@ -78,21 +76,9 @@ export async function sendAsButtonTemplate({
       showTyping: true,
     });
 
-    const d = await new Promise<FetchAsData>((yay, nah) => {
-      setTimeout(async () => {
-        try {
-          const j = await fetchAsJson(url, fetchOpts);
+    await runAfter(typingDelay);
 
-          if (j.status > 399) {
-            throw j;
-          }
-
-          yay(j);
-        } catch (e) {
-          nah(e);
-        }
-      }, typingDelay || 250);
-    });
+    const d = await fetchAsJson(url, fetchOpts);
 
     /** NOTE: Turn typing indicator off */
     await sendAsTypingBubble({

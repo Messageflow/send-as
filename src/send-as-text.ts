@@ -17,9 +17,6 @@ export declare interface SendAsTextParams {
 
 /** Import typings */
 import {
-  FetchAsData,
-} from 'fetch-as';
-import {
   RequestInit,
 } from 'node-fetch';
 import {
@@ -33,7 +30,7 @@ import {
 } from 'fetch-as';
 
 /** Import other modules */
-// import chunkMessage from '../helper/chunk-message';
+import runAfter from './run-after';
 import sendAsTypingBubble from './send-as-typing-bubble';
 
 export async function sendAsText({
@@ -53,6 +50,12 @@ export async function sendAsText({
         'content-type': 'application/json',
         ...(options.headers || {}),
       },
+      body: JSON.stringify({
+        recipient,
+        message,
+        messaging_type: 'RESPONSE',
+        notification_type: notificationType || 'NO_PUSH',
+      }),
     };
 
     /** NOTE: Always show typing bubble first */
@@ -64,62 +67,9 @@ export async function sendAsText({
       showTyping: true,
     });
 
-    /** FIXME: Needs optimization so badly!!! */
-    const d = await new Promise<FetchAsData>((yay, nah) => {
-      setTimeout(async () => {
-        try {
-          const msgSent = message.text.length > 640
-            ? await pMapSeries(
-              await chunkMessage(message.text),
-              async (msgChunk) => {
-                await sendAsTypingBubble({
-                  url,
-                  recipient,
-                  notificationType,
-                  options,
-                  showTyping: true,
-                });
+    await runAfter(typingDelay);
 
-                const fetchOptsForMsgChunk = {
-                  ...fetchOpts,
-                  body: JSON.stringify({
-                    recipient,
-                    messaging_type: 'RESPONSE',
-                    message: {
-                      text: msgChunk,
-                    },
-                    notification_type: notificationType || 'NO_PUSH',
-                  }),
-                };
-                const msgChunkSent = await fetchAsJson(url, fetchOptsForMsgChunk);
-
-                await sendAsTypingBubble({
-                  url,
-                  recipient,
-                  notificationType,
-                  options,
-                  showTyping: false,
-                });
-
-                return msgChunkSent;
-              }
-            )
-            : await fetchAsJson(url, {
-              ...fetchOpts,
-              body: JSON.stringify({
-                recipient,
-                message,
-                messaging_type: 'RESPONSE',
-                notification_type: notificationType || 'NO_PUSH',
-              }),
-            });
-
-          yay(msgSent);
-        } catch (e) {
-          nah(e);
-        }
-      }, typingDelay || 250);
-    });
+    const d = await fetchAsJson(url, fetchOpts);
 
     /** NOTE: Turn typing indicator off */
     await sendAsTypingBubble({

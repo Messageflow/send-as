@@ -13,7 +13,7 @@ export declare interface SendAsGenericTemplateMessagePayloadElements {
   subtitle?: string; /** 80 char limit */
   image_url?: string;
   default_action?: DefaultAction;
-  buttons: (URLButton | PostbackButton)[];
+  buttons: URLButton[] | PostbackButton[];
 }
 export declare interface SendAsGenericTemplateMessagePayload {
   template_type: string | 'generic';
@@ -40,9 +40,6 @@ export declare interface SendAsGenericTemplateParams {
 }
 
 /** Import typings */
-import {
-  FetchAsData
-} from 'fetch-as';
 import { RequestInit } from 'node-fetch';
 import {
   FbEventRecipient,
@@ -56,6 +53,7 @@ import {
 } from 'fetch-as';
 
 /** Import other modules */
+import runAfter from './run-after';
 import sendAsTypingBubble from './send-as-typing-bubble';
 
 export async function sendAsGenericTemplate({
@@ -92,21 +90,9 @@ export async function sendAsGenericTemplate({
       showTyping: true,
     });
 
-    const d = await new Promise<FetchAsData>((yay, nah) => {
-      setTimeout(async () => {
-        try {
-          const j = await fetchAsJson(url, fetchOpts);
+    await runAfter(typingDelay);
 
-          if (j.status > 399) {
-            throw j;
-          }
-
-          yay(j);
-        } catch (e) {
-          nah(e);
-        }
-      }, typingDelay || 250);
-    });
+    const d = await fetchAsJson(url, fetchOpts);
 
     /** NOTE: Turn typing indicator off */
     await sendAsTypingBubble({
