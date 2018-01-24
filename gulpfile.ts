@@ -22,11 +22,9 @@ const BABELRC = {
     [
       'env',
       {
-        targets: {
-          node: 'current',
-        },
-        spec: true,
         modules: 'commonjs',
+        spec: true,
+        targets: { node: 'current' },
         useBuiltIns: true,
       },
     ],
@@ -34,9 +32,9 @@ const BABELRC = {
       [
         'minify',
         {
-          replace: false,
           removeConsole: false,
           removeDebugger: true,
+          replace: false,
         },
       ],
     ] : []),
@@ -83,11 +81,11 @@ gulp.task('babel', () =>
 
 gulp.task('clean', () => del([
   TMP,
+  '*.d.ts*',
   '*.js',
   '*.jsx',
-  '*.d.ts*',
-  'test/',
   'demo/',
+  'test/',
 ]));
 
 gulp.task('clear', () => del([

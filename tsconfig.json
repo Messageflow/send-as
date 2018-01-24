@@ -13,7 +13,7 @@
     "experimentalDecorators": true,
     "lib": ["esnext", "esnext.asynciterable"],
     "moduleResolution": "node",
-    "module": "es2015",
+    "module": "commonjs",
     "target": "esnext",
     "jsx": "react",
     "jsxFactory": "h",
