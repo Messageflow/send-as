@@ -13,7 +13,7 @@ export declare interface SendAsGenericTemplateMessagePayloadElements {
   subtitle?: string; /** 80 char limit */
   image_url?: string;
   default_action?: DefaultAction;
-  buttons: URLButton[] | PostbackButton[]; /** 3 btn limit */
+  buttons: (URLButton | PostbackButton)[]; /** 3 btn limit */
 }
 export declare interface SendAsGenericTemplateMessagePayload {
   template_type: 'generic';
@@ -41,20 +41,10 @@ export declare interface SendAsGenericTemplateParams {
 
 /** Import typings */
 import { RequestInit } from 'node-fetch';
-import {
-  FbEventRecipient,
-  PostbackButton,
-  URLButton,
-} from './';
-
-/** Import project dependencies */
-import {
-  fetchAsJson,
-} from 'fetch-as';
+import { FbEventRecipient, PostbackButton, URLButton } from './';
 
 /** Import other modules */
-import runAfter from './run-after';
-import sendAsTypingBubble from './send-as-typing-bubble';
+import { sendAs } from './';
 
 export async function sendAsGenericTemplate({
   url,
@@ -64,54 +54,14 @@ export async function sendAsGenericTemplate({
   typingDelay,
   options = {},
 }: SendAsGenericTemplateParams) {
-  try {
-    const fetchOpts = {
-      ...options,
-      method: 'POST',
-      compress: options.compress || true,
-      timeout: options.timeout || 599e3,
-      headers: {
-        ...(options.headers || {}),
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...(options.body || {}),
-        recipient,
-        message,
-        messaging_type: 'RESPONSE',
-        notification_type: notificationType || 'NO_PUSH',
-      }),
-    };
-
-    /** NOTE: Always display typing bubble first */
-    await sendAsTypingBubble({
-      url,
-      recipient,
-      options,
-      showTyping: true,
-    });
-
-    await runAfter(typingDelay);
-
-    const d = await fetchAsJson(url, fetchOpts);
-
-    /** NOTE: Turn typing indicator off */
-    await sendAsTypingBubble({
-      url,
-      recipient,
-      options,
-      showTyping: false,
-    });
-
-    /** NOTE: Throw error response */
-    if (d.status > 399) {
-      throw d.data;
-    }
-
-    return d.data;
-  } catch (e) {
-    throw e;
-  }
+  return sendAs({
+    url,
+    recipient,
+    message,
+    notificationType,
+    typingDelay,
+    options,
+  });
 }
 
 export default sendAsGenericTemplate;

@@ -7,17 +7,11 @@ export declare interface SendAsReadReceiptParams {
 }
 
 /** Import typings */
-import {
-  RequestInit,
-} from 'node-fetch';
-import {
-  FbEventRecipient,
-} from './';
+import { RequestInit } from 'node-fetch';
+import { FbEventRecipient } from './';
 
 /** Import project dependencies */
-import {
-  fetchAsJson
-} from 'fetch-as';
+import { fetchAsJson } from 'fetch-as';
 
 export async function sendAsReadReceipt({
   url,
