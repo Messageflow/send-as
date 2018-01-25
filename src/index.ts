@@ -58,6 +58,25 @@ export async function sendAs({
   options = {},
 }: SendAsParams) {
   try {
+    if (typeof url !== 'string' || !url.length) {
+      throw new TypeError('url is missing');
+    }
+
+    if (recipient == null) {
+      throw new TypeError('recipient is undefined');
+    }
+
+    if (
+      typeof (recipient && recipient.id) !== 'string'
+        || !((recipient && recipient.id).length)
+    ) {
+      throw new TypeError('recipient[id] is missing');
+    }
+
+    if (message == null) {
+      throw new TypeError('message is undefined');
+    }
+
     const fetchOpts = {
       ...options,
       method: 'POST',
@@ -98,7 +117,7 @@ export async function sendAs({
 
     /** NOTE: Throw error response */
     if (d.status > 399) {
-      throw d.data;
+      throw { error: d.data };
     }
 
     return d.data;
