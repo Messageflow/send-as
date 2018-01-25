@@ -15,12 +15,12 @@ export declare interface SendAsButtonTemplateParams {
   recipient: FbEventRecipient;
   message: SendAsButtonTemplateMessage;
   url: string;
-  notificationType:
+  notificationType?:
     'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
-  typingDelay: number;
-  options: RequestInit;
+  typingDelay?: number;
+  options?: RequestInit;
 }
 
 /** Import typings */
@@ -57,10 +57,11 @@ export async function sendAsButtonTemplate({
       compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
-        'content-type': 'application/json',
         ...(options.headers || {}),
+        'content-type': 'application/json',
       },
       body: JSON.stringify({
+        ...(options.body || {}),
         recipient,
         message,
         messaging_type: 'RESPONSE',

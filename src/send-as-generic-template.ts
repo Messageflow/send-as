@@ -31,12 +31,12 @@ export declare interface SendAsGenericTemplateParams {
   url: string;
   recipient: FbEventRecipient;
   message: SendAsGenericTemplateMessage;
-  notificationType:
+  notificationType?:
     'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
-  typingDelay: number;
-  options: RequestInit;
+  typingDelay?: number;
+  options?: RequestInit;
 }
 
 /** Import typings */
@@ -71,10 +71,11 @@ export async function sendAsGenericTemplate({
       compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
-        'content-type': 'application/json',
         ...(options.headers || {}),
+        'content-type': 'application/json',
       },
       body: JSON.stringify({
+        ...(options.body || {}),
         recipient,
         message,
         messaging_type: 'RESPONSE',
@@ -102,6 +103,7 @@ export async function sendAsGenericTemplate({
       showTyping: false,
     });
 
+    /** NOTE: Throw error response */
     if (d.status > 399) {
       throw d.data;
     }

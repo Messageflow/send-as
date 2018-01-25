@@ -3,7 +3,7 @@
 export declare interface SendAsReadReceiptParams {
   url: string;
   recipient: FbEventRecipient;
-  options: RequestInit;
+  options?: RequestInit;
 }
 
 /** Import typings */
@@ -31,8 +31,8 @@ export async function sendAsReadReceipt({
       compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
-        'content-type': 'application/json',
         ...(options.headers || {}),
+        'content-type': 'application/json',
       },
       /**
        * NOTE:
@@ -41,12 +41,14 @@ export async function sendAsReadReceipt({
        * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
        */
       body: JSON.stringify({
+        ...(options.body || {}),
         recipient,
         sender_action: 'mark_seen',
       }),
     };
     const d = await fetchAsJson(url, fetchOpts);
 
+    /** NOTE: Throw error response */
     if (d.status > 399) {
       throw d.data;
     }

@@ -1,10 +1,10 @@
 // @ts-check
 
-export declare interface SendTypingBubbleParams {
+export declare interface SendAsTypingBubbleParams {
   url: string;
   recipient: FbEventRecipient;
-  options: RequestInit;
-  showTyping: boolean;
+  options?: RequestInit;
+  showTyping?: boolean;
 }
 
 /** Import typings */
@@ -20,12 +20,12 @@ import {
   fetchAsJson,
 } from 'fetch-as';
 
-export async function sendTypingBubble({
+export async function sendAsTypingBubble({
   url,
   recipient,
   showTyping = true,
   options = {},
-}: SendTypingBubbleParams) {
+}: SendAsTypingBubbleParams) {
   try {
     const fetchOpts = {
       ...options,
@@ -33,8 +33,8 @@ export async function sendTypingBubble({
       compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
-        'content-type': 'application/json',
         ...(options.headers || {}),
+        'content-type': 'application/json',
       },
       /**
        * NOTE:
@@ -43,6 +43,7 @@ export async function sendTypingBubble({
        * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
        */
       body: JSON.stringify({
+        ...(options.body || {}),
         recipient,
         sender_action: showTyping ? 'typing_on' : 'typing_off',
       }),
@@ -60,4 +61,4 @@ export async function sendTypingBubble({
   }
 }
 
-export default sendTypingBubble;
+export default sendAsTypingBubble;

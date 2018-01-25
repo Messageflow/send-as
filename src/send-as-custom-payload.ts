@@ -1,12 +1,12 @@
 // @ts-check
 
-export declare interface SendAsTextMessage {
-  text: string; /** 2000 char limit */
+export declare interface SendAsCustomPayloadMessage {
+  [key: string]: any;
 }
-export declare interface SendAsTextParams {
-  url: string;
+export declare interface SendAsCustomPayloadParams {
   recipient: FbEventRecipient;
-  message: SendAsTextMessage;
+  message: SendAsCustomPayloadMessage;
+  url: string;
   notificationType?:
     'NO_PUSH'
     | 'REGULAR'
@@ -24,7 +24,6 @@ import {
 } from './';
 
 /** Import project dependencies */
-// import pMapSeries from 'p-map-series';
 import {
   fetchAsJson,
 } from 'fetch-as';
@@ -33,19 +32,19 @@ import {
 import runAfter from './run-after';
 import sendAsTypingBubble from './send-as-typing-bubble';
 
-export async function sendAsText({
+export async function sendAsCustomPayload({
   url,
   recipient,
   message,
   notificationType,
   typingDelay,
   options = {},
-}: SendAsTextParams) {
+}: SendAsCustomPayloadParams) {
   try {
     const fetchOpts = {
       ...options,
       method: 'POST',
-      compress: true,
+      compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
         ...(options.headers || {}),
@@ -60,7 +59,7 @@ export async function sendAsText({
       }),
     };
 
-    /** NOTE: Always show typing bubble first */
+    /** NOTE: Always display typing bubble first */
     await sendAsTypingBubble({
       url,
       recipient,
@@ -77,7 +76,7 @@ export async function sendAsText({
       url,
       recipient,
       options,
-      showTyping: true,
+      showTyping: false,
     });
 
     /** NOTE: Throw error response */
@@ -91,4 +90,4 @@ export async function sendAsText({
   }
 }
 
-export default sendAsText;
+export default sendAsCustomPayload;
