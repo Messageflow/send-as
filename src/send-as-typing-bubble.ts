@@ -4,10 +4,6 @@ export declare interface SendTypingBubbleParams {
   url: string;
   recipient: FbEventRecipient;
   options: RequestInit;
-  notificationType: string
-    | 'NO_PUSH'
-    | 'REGULAR'
-    | 'SILENT_PUSH';
   showTyping: boolean;
 }
 
@@ -27,12 +23,12 @@ import {
 export async function sendTypingBubble({
   url,
   recipient,
-  notificationType,
   showTyping = true,
   options = {},
 }: SendTypingBubbleParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
       compress: options.compress || true,
       timeout: options.timeout || 599e3,
@@ -40,11 +36,15 @@ export async function sendTypingBubble({
         'content-type': 'application/json',
         ...(options.headers || {}),
       },
+      /**
+       * NOTE:
+       * When using sender_action,
+       * recipient should be the only other property set in the request.
+       * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
+       */
       body: JSON.stringify({
         recipient,
-        messaging_type: 'RESPONSE',
         sender_action: showTyping ? 'typing_on' : 'typing_off',
-        notification_type: notificationType || 'NO_PUSH',
       }),
     };
     const d = await fetchAsJson(url, fetchOpts);

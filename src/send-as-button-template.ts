@@ -1,13 +1,13 @@
 // @ts-check
 
 export declare interface SendAsButtonTemplateMessagePayload {
-  template_type: string | 'button';
+  template_type: 'button';
   text: string; /** 640 char limit */
-  buttons: (URLButton | PostbackButton)[]; /** 3 btn limit */
+  buttons: URLButton[] | PostbackButton[]; /** 3 btn limit */
 }
 export declare interface SendAsButtonTemplateMessage {
   attachment: {
-    type: string | 'template';
+    type: 'template';
     payload: SendAsButtonTemplateMessagePayload;
   };
 }
@@ -15,8 +15,8 @@ export declare interface SendAsButtonTemplateParams {
   recipient: FbEventRecipient;
   message: SendAsButtonTemplateMessage;
   url: string;
-  notificationType: string
-    | 'NO_PUSH'
+  notificationType:
+    'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
   typingDelay: number;
@@ -52,6 +52,7 @@ export async function sendAsButtonTemplate({
 }: SendAsButtonTemplateParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
       compress: options.compress || true,
       timeout: options.timeout || 599e3,
@@ -71,7 +72,6 @@ export async function sendAsButtonTemplate({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: true,
     });
@@ -84,7 +84,6 @@ export async function sendAsButtonTemplate({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: false,
     });

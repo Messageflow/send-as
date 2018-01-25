@@ -1,14 +1,14 @@
 // @ts-check
 
 export declare interface SendAsTextMessage {
-  text: string;
+  text: string; /** 2000 char limit */
 }
 export declare interface SendAsTextParams {
   url: string;
   recipient: FbEventRecipient;
   message: SendAsTextMessage;
-  notificationType: string
-    | 'NO_PUSH'
+  notificationType:
+    'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
   typingDelay: number;
@@ -43,6 +43,7 @@ export async function sendAsText({
 }: SendAsTextParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
       compress: true,
       timeout: options.timeout || 599e3,
@@ -62,7 +63,6 @@ export async function sendAsText({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: true,
     });
@@ -75,7 +75,6 @@ export async function sendAsText({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: true,
     });

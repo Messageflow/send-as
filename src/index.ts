@@ -4,18 +4,18 @@ export declare interface FbEventRecipient {
   id: string;
 }
 export interface PostbackButton {
-  type: string | 'postback';
+  type: 'postback';
   title: string; /** 20 char limit */
   payload: string; /** 1000 char limit */
 }
 export interface URLButton {
-  type: string | 'web_url';
+  type: 'web_url';
   title: string; /** 20 char limit */
   url: string;
-  webview_height_ratio?: string | 'full' | 'compact' | 'tall';
+  webview_height_ratio?: 'full' | 'compact' | 'tall';
   messenger_extensions?: boolean;
   fallback_url?: string; /** Required if messenger_extensions is set */
-  webview_share_button?: string | 'hide';
+  webview_share_button?: 'hide';
 }
 
 /** Import other modules */

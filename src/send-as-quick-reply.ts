@@ -1,28 +1,28 @@
 // @ts-check
 
 export declare interface MessageAttachment {
-  type: string; /** 'image' | 'audio' | 'video' | 'file' | 'template' */
+  type: 'image' | 'audio' | 'video' | 'file' | 'template';
   payload: {
     [key: string]: any;
   };
 }
 export declare interface MessageQuickReplies {
-  content_type: string; /**  | 'text' | 'location' */
+  content_type: 'text' | 'location';
   title?: string; /** Required if content_type=text & 20 char limit */
   payload?: string | number; /** Required if content_type=text & 1000 char limit */
   image_url?: string; /** Minimum 24px x 24px. Larger image will be cropped and resized */
 }
 export declare interface SendAsQuickReplyMessage {
-  text: string | 'text' | 'attachment';
-  quick_replies: MessageQuickReplies[]; /** Up to 11 quick replies */
+  text: 'text' | 'attachment';
   attachment?: MessageAttachment;
+  quick_replies: MessageQuickReplies[]; /** Up to 11 quick replies */
 }
 export declare interface SendAsQuickReplyParams {
   url: string;
   recipient: FbEventRecipient;
   message: SendAsQuickReplyMessage;
-  notificationType: string
-    | 'NO_PUSH'
+  notificationType:
+    'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
   typingDelay: number;
@@ -56,8 +56,9 @@ export async function sendAsQuickReply({
 }: SendAsQuickReplyParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
-      compress: true,
+      compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
         'content-type': 'application/json',
@@ -75,7 +76,6 @@ export async function sendAsQuickReply({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: true,
     });
@@ -88,7 +88,6 @@ export async function sendAsQuickReply({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: false,
     });

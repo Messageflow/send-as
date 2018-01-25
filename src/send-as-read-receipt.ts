@@ -3,10 +3,6 @@
 export declare interface SendAsReadReceiptParams {
   url: string;
   recipient: FbEventRecipient;
-  notificationType: string
-    | 'NO_PUSH'
-    | 'REGULAR'
-    | 'SILENT_PUSH';
   options: RequestInit;
 }
 
@@ -26,23 +22,27 @@ import {
 export async function sendAsReadReceipt({
   url,
   recipient,
-  notificationType,
   options = {},
 }: SendAsReadReceiptParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
-      compress: true,
+      compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
         'content-type': 'application/json',
         ...(options.headers || {}),
       },
+      /**
+       * NOTE:
+       * When using sender_action,
+       * recipient should be the only other property set in the request.
+       * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
+       */
       body: JSON.stringify({
         recipient,
-        messaging_type: 'RESPONSE',
         sender_action: 'mark_seen',
-        notificationType: notificationType || 'NO_PUSH',
       }),
     };
     const d = await fetchAsJson(url, fetchOpts);

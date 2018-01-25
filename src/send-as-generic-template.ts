@@ -1,29 +1,29 @@
 // @ts-check
 
 export declare interface DefaultAction {
-  title: string; /** 20 char limit */
+  type: 'web_url';
   url: string;
-  webview_height_ratio?: string | 'full' | 'compact' | 'tall';
+  webview_height_ratio?: 'full' | 'compact' | 'tall';
   messenger_extensions?: boolean;
   fallback_url?: string; /** Required if messenger_extensions is set */
-  webview_share_button?: string | 'hide';
+  webview_share_button?: 'hide';
 }
 export declare interface SendAsGenericTemplateMessagePayloadElements {
   title: string; /** 80 char limit */
   subtitle?: string; /** 80 char limit */
   image_url?: string;
   default_action?: DefaultAction;
-  buttons: URLButton[] | PostbackButton[];
+  buttons: URLButton[] | PostbackButton[]; /** 3 btn limit */
 }
 export declare interface SendAsGenericTemplateMessagePayload {
-  template_type: string | 'generic';
-  shareable?: boolean;
-  image_aspect_ratio?: string | 'horizontal' | 'square';
+  template_type: 'generic';
+  shareable?: boolean; /** Defaults to false */
+  image_aspect_ratio?: 'horizontal' | 'square';
   elements: SendAsGenericTemplateMessagePayloadElements[]; /** 10 elem limit */
 }
 export declare interface SendAsGenericTemplateMessage {
   attachment: {
-    type: string | 'template',
+    type: 'template',
     payload: SendAsGenericTemplateMessagePayload;
   };
 }
@@ -31,8 +31,8 @@ export declare interface SendAsGenericTemplateParams {
   url: string;
   recipient: FbEventRecipient;
   message: SendAsGenericTemplateMessage;
-  notificationType: string
-    | 'NO_PUSH'
+  notificationType:
+    'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
   typingDelay: number;
@@ -66,8 +66,9 @@ export async function sendAsGenericTemplate({
 }: SendAsGenericTemplateParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
-      compress: true,
+      compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
         'content-type': 'application/json',
@@ -85,7 +86,6 @@ export async function sendAsGenericTemplate({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: true,
     });
@@ -98,7 +98,6 @@ export async function sendAsGenericTemplate({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: false,
     });

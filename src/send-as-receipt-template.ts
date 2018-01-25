@@ -4,7 +4,7 @@ export declare interface SendAsReceiptTemplateMessagePayloadElements {
   title: string; /** 80 char limit */
   subtitle?: string; /** 80 char limit */
   quantity?: number;
-  price: number;
+  price: number; /** For free items, '0' is allowed */
   currency?: string;
   image_url?: string;
 }
@@ -13,8 +13,8 @@ export declare interface SendAsReceiptTemplateMessagePayloadAddress {
   street_2?: string;
   city: string;
   postal_code: string;
-  state: string;
-  country: string;
+  state: string; /** state abbreviation for U.S., or the region/province for non-U.S. */
+  country: string; /** two-letter country abbreviation */
 }
 export declare interface SendAsReceiptTemplateMessagePayloadSummary {
   subtotal?: number;
@@ -27,23 +27,22 @@ export declare interface SendAsReceiptTemplateMessagePayloadAdjustment {
   amount: number;
 }
 export declare interface SendAsReceiptTemplateMessagePayload {
-  template_type: string | 'receipt';
-  shareable?: boolean;
+  template_type: 'receipt';
+  shareable?: boolean; /** Defaults to false */
   recipient_name: string;
-  merchant_name?: string;
-  order_number: string;
+  merchant_name?: string; /** If present this is shown as logo text */
+  order_number: string; /** Must be unique */
   currency: string;
   payment_method: string;
-  order_url?: string;
-  timestamp?: number;
+  timestamp?: number; /** Timestamp of the order in seconds */
+  elements: SendAsReceiptTemplateMessagePayloadElements[]; /** 100 elem limit */
   address?: SendAsReceiptTemplateMessagePayloadAddress;
   summary: SendAsReceiptTemplateMessagePayloadSummary;
   adjustments?: SendAsReceiptTemplateMessagePayloadAdjustment[];
-  elements: SendAsReceiptTemplateMessagePayloadElements[]; /** 100 elem limit */
 }
 export declare interface SendAsReceiptTemplateMessage {
   attachment: {
-    type: string | 'template',
+    type: 'template',
     payload: SendAsReceiptTemplateMessagePayload;
   };
 }
@@ -51,8 +50,8 @@ export declare interface SendAsReceiptTemplateParams {
   url: string;
   recipient: FbEventRecipient;
   message: SendAsReceiptTemplateMessage;
-  notificationType: string
-    | 'NO_PUSH'
+  notificationType:
+    'NO_PUSH'
     | 'REGULAR'
     | 'SILENT_PUSH';
   typingDelay: number;
@@ -86,8 +85,9 @@ export async function sendAsReceiptTemplate({
 }: SendAsReceiptTemplateParams) {
   try {
     const fetchOpts = {
+      ...options,
       method: 'POST',
-      compress: true,
+      compress: options.compress || true,
       timeout: options.timeout || 599e3,
       headers: {
         'content-type': 'application/json',
@@ -105,7 +105,6 @@ export async function sendAsReceiptTemplate({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: true,
     });
@@ -118,7 +117,6 @@ export async function sendAsReceiptTemplate({
     await sendAsTypingBubble({
       url,
       recipient,
-      notificationType,
       options,
       showTyping: false,
     });
