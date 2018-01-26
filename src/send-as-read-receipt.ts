@@ -44,7 +44,7 @@ export async function sendAsReadReceipt({
 
     /** NOTE: Throw error response */
     if (d.status > 399) {
-      throw d.data;
+      throw { error: d.data };
     }
 
     return d.data;

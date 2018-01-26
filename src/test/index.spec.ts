@@ -2,8 +2,27 @@
 
 /** Import other modules */
 import { sendAs } from '../';
+import config, {
+  killNocky,
+  nocky,
+  TEST_API_VERSION,
+  TEST_URL,
+} from './config';
+import * as expected from './expected';
 
 describe('send-as', () => {
+  beforeEach(async () => {
+    const { fbPageAccesToken } = await config();
+
+    await nocky({
+      url: TEST_URL,
+      apiVersion: TEST_API_VERSION,
+      pageAccessToken: fbPageAccesToken,
+    });
+  });
+
+  afterEach(async () => await killNocky());
+
   test('url is missing', async () => {
     try {
       await sendAs({
@@ -59,4 +78,102 @@ describe('send-as', () => {
       expect(e.message).toBe('message is undefined');
     }
   });
+
+  test('Message cannot be empty, must provide valid attachment or text', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAs({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: null,
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({ ...expected.emptyMessage });
+    }
+  });
+
+  test('The parameter message[attachment][type] is required', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAs({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: null,
+            payload: null,
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({ ...expected.missingMessageAttachmentType });
+    }
+  });
+
+  test('The parameter message[attachment][payload] is required', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAs({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: null,
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({ ...expected.missingMessageAttachmentPayload });
+    }
+  });
+
+  /** NOTE: Test for templates */
+  test('Invalid template type', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAs({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: null,
+              elements: null,
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({ ...expected.invalidTemplateType });
+    }
+  });
+
 });

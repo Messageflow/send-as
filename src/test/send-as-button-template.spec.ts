@@ -23,52 +23,7 @@ describe('send-as-button-template', () => {
 
   afterEach(async () => await killNocky());
 
-  test('missing message', async () => {
-    try {
-      const {
-        fbGraphApiUrl,
-        testReceipientId,
-      } = await config();
-
-      await sendAsButtonTemplate({
-        url: `${fbGraphApiUrl}`,
-        message: {
-          attachment: null,
-        },
-        recipient: {
-          id: testReceipientId,
-        },
-      });
-    } catch (e) {
-      expect(e).toEqual({ ...expected.missingMessage });
-    }
-  });
-
-  test('missing message[attachment][type]', async () => {
-    try {
-      const {
-        fbGraphApiUrl,
-        testReceipientId,
-      } = await config();
-
-      await sendAsButtonTemplate({
-        url: `${fbGraphApiUrl}`,
-        message: {
-          attachment: {
-            type: null,
-            payload: null,
-          },
-        },
-        recipient: {
-          id: testReceipientId,
-        },
-      });
-    } catch (e) {
-      expect(e).toEqual({ ...expected.missingMessageAttachmentType });
-    }
-  });
-
-  test('missing message[attachment][payload]', async () => {
+  test('The parameter name_placeholder[text] is required', async () => {
     try {
       const {
         fbGraphApiUrl,
@@ -80,7 +35,11 @@ describe('send-as-button-template', () => {
         message: {
           attachment: {
             type: 'template',
-            payload: null,
+            payload: {
+              template_type: 'button',
+              text: null,
+              buttons: null,
+            },
           },
         },
         recipient: {
@@ -88,7 +47,35 @@ describe('send-as-button-template', () => {
         },
       });
     } catch (e) {
-      expect(e).toEqual({ ...expected.missingMessageAttachmentPayload });
+      expect(e).toEqual({ ...expected.buttonTemplate.missingNamePlaceholderText });
+    }
+  });
+
+  test('The parameter name_placeholder[buttons] is required', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAsButtonTemplate({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'test-button-template',
+              buttons: null,
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({ ...expected.buttonTemplate.missingNamePlaceholderButtons });
     }
   });
 
@@ -116,7 +103,43 @@ describe('send-as-button-template', () => {
         },
       });
     } catch (e) {
-      expect(e).toEqual({ ...expected.missingNamePlaceholderButtons });
+      expect(e).toEqual({ ...expected.buttonTemplate.emptyNamePlaceHolderButtons });
+    }
+  });
+
+  test('The parameter name_placeholder[buttons][0][type] is required', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAsButtonTemplate({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'test button template',
+              buttons: [
+                {
+                  type: null,
+                  payload: null,
+                  title: null,
+                },
+              ],
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({
+        ...expected.buttonTemplate.missingNamePlaceholderButtonsButtonType,
+      });
     }
   });
 
@@ -139,7 +162,7 @@ describe('send-as-button-template', () => {
                 {
                   type: 'postback',
                   payload: null,
-                  title: 'test-postback-button-title',
+                  title: null,
                 },
               ],
             },
@@ -150,7 +173,84 @@ describe('send-as-button-template', () => {
         },
       });
     } catch (e) {
-      expect(e).toEqual({ ...expected.missingPostbackTypeButtonPayload });
+      expect(e).toEqual({
+        ...expected.buttonTemplate.missingNamePlaceholderButtonsButtonTitle,
+      });
+    }
+  });
+
+  test(
+    'Param name_placeholder[buttons][0][title] must be a non-empty UTF-8 encoded string',
+    async () => {
+      try {
+        const {
+          fbGraphApiUrl,
+          testReceipientId,
+        } = await config();
+
+        await sendAsButtonTemplate({
+          url: `${fbGraphApiUrl}`,
+          message: {
+            attachment: {
+              type: 'template',
+              payload: {
+                template_type: 'button',
+                text: 'test button template',
+                buttons: [
+                  {
+                    type: 'postback',
+                    payload: null,
+                    title: '',
+                  },
+                ],
+              },
+            },
+          },
+          recipient: {
+            id: testReceipientId,
+          },
+        });
+      } catch (e) {
+        expect(e).toEqual({
+          ...expected.buttonTemplate.emptyNamePlaceholderButtonsButtonTitle,
+        });
+      }
+    }
+  );
+
+  test('Payload cannot be empty for postback type button', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      await sendAsButtonTemplate({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'test button template',
+              buttons: [
+                {
+                  type: 'postback',
+                  payload: null, /** payload: '', */
+                  title: 'a',
+                },
+              ],
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({
+        ...expected.buttonTemplate.missingPostbackTypeButtonPayload,
+      });
     }
   });
 
@@ -173,7 +273,7 @@ describe('send-as-button-template', () => {
                 {
                   type: 'web_url',
                   title: 'test-url-button-title',
-                  url: null,
+                  url: null, /** url: '', */
                 },
               ],
             },
@@ -184,7 +284,9 @@ describe('send-as-button-template', () => {
         },
       });
     } catch (e) {
-      expect(e).toEqual({ ...expected.missingUrlTypeButtonUrl });
+      expect(e).toEqual({
+        ...expected.buttonTemplate.missingUrlTypeButtonUrl,
+      });
     }
   });
 
@@ -218,7 +320,9 @@ describe('send-as-button-template', () => {
         },
       });
     } catch (e) {
-      expect(e).toEqual({ ...expected.invalidUrlButtonsUrl });
+      expect(e).toEqual({
+        ...expected.buttonTemplate.invalidUrlButtonsUrl,
+      });
     }
   });
 

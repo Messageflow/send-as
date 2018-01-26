@@ -17,15 +17,18 @@ export interface URLButton {
 export declare interface FbEventRecipient {
   id: string;
 }
+export declare interface SendAsMessage {
+  [key: string]: any;
+}
 export declare interface SendAsParams {
   recipient: FbEventRecipient;
   message:
     SendAsButtonTemplateMessage |
-    SendAsCustomPayloadMessage |
     SendAsGenericTemplateMessage |
     SendAsQuickReplyMessage |
     SendAsReceiptTemplateMessage |
-    SendAsTextMessage;
+    SendAsTextMessage |
+    SendAsMessage;
   url: string;
   notificationType?:
     'NO_PUSH'
@@ -38,7 +41,6 @@ export declare interface SendAsParams {
 /** Import typings */
 import { RequestInit } from 'node-fetch';
 import { SendAsButtonTemplateMessage } from './send-as-button-template';
-import { SendAsCustomPayloadMessage } from './send-as-custom-payload';
 import { SendAsGenericTemplateMessage } from './send-as-generic-template';
 import { SendAsQuickReplyMessage } from './send-as-quick-reply';
 import { SendAsReceiptTemplateMessage } from './send-as-receipt-template';
