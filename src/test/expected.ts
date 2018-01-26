@@ -58,3 +58,14 @@ export const missingUrlTypeButtonUrl = {
     fbtrace_id: 'EPmARGhfUm+',
   },
 };
+export const invalidUrlButtonsUrl = {
+  error: {
+    message: '(#100) name_placeholder[buttons][0][url] should represent a valid URL',
+    type: 'OAuthException',
+    code: 100,
+    fbtrace_id: 'FeFimzNw6fV',
+  },
+};
+export const successMessageId = {
+  message_id: 'mid.$cAaIwD89I0sNnyYILOvHmdZcTp7vX',
+};

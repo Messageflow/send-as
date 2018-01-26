@@ -13,6 +13,8 @@ export declare interface Config {
 
 /** Import project dependencies */
 import { randomBytes } from 'crypto';
+import idx from 'idx';
+import isUrl from 'is-url-superb';
 import nock from 'nock';
 
 /** Import other modules */
@@ -55,92 +57,77 @@ export async function nocky({
           recipient,
           message,
         } = reqBody;
+        const recipientId = idx(recipient, _ => _.id) || 'no-recipient-id';
 
         if (/^typing/i.test(sender_action)) {
           console.log('#nock-typing');
-
-          return [
-            200,
-            {
-              recipient_id: (recipient && recipient.id) || 'no-recipient-id',
-            },
-          ];
+          return [200, { recipient_id: recipientId }];
         }
 
         switch (true) {
           case message.attachment == null: {
-            return [
-              400,
-              { ...expected.missingMessage },
-            ];
+            return [400, { ...expected.missingMessage }];
           }
-          case message.attachment && message.attachment.type == null: {
-            return [
-              400,
-              { ...expected.missingMessageAttachmentType },
-            ];
+          case idx(message, _ => _.attachment.type) == null: {
+            return [400, { ...expected.missingMessageAttachmentType }];
           }
-          case message.attachment && message.attachment.payload == null: {
-            return [
-              400,
-              { ...expected.missingMessageAttachmentPayload },
-            ];
+          case idx(message, _ => _.attachment.payload) == null: {
+            return [400, { ...expected.missingMessageAttachmentPayload }];
           }
-          case message.attachment.payload
-            && message.attachment.payload
-            && message.attachment.payload.buttons != null: {
-              if (!(message.attachment.payload.buttons).length) {
-                return [
-                  400,
-                  { ...expected.missingNamePlaceholderButtons },
-                ];
-              }
-
-              if (
-                message.attachment.payload.buttons[0]
-                  && message.attachment.payload.buttons[0].title == null
-              ) {
-                return [
-                  400,
-                  { ...expected.missingElementButtonTitle },
-                ];
-              }
-
-              if (
-                message.attachment.payload.buttons[0]
-                  && (
-                    message.attachment.payload.buttons[0].type
-                      && message.attachment.payload.buttons[0].type === 'postback'
-                  )
-                  && message.attachment.payload.buttons[0].payload == null
-              ) {
-                return [
-                  400,
-                  { ...expected.missingPostbackTypeButtonPayload },
-                ];
-              }
-
-              if (
-                message.attachment.payload.buttons[0]
-                  && (
-                    message.attachment.payload.buttons[0].type
-                      && message.attachment.payload.buttons[0].type === 'web_url'
-                  )
-                  && message.attachment.payload.buttons[0].url == null
-              ) {
-                return [
-                  400,
-                  { ...expected.missingUrlTypeButtonUrl },
-                ];
-              }
+          case idx(message, _ => _.attachment.payload.buttons) != null: {
+            if (!idx(message, _ => _.attachment.payload.buttons.length)) {
+              return [400, { ...expected.missingNamePlaceholderButtons }];
             }
+
+            const btns = idx(message, _ => _.attachment.payload.buttons);
+
+            if (idx(btns, _ => _[0].title) == null) {
+              return [400, { ...expected.missingElementButtonTitle }];
+            }
+
+            /** NOTE: Postback buttons */
+            const btnType = idx(btns, _ => _[0].type);
+
+            if (btnType === 'postback') {
+              const btnPayload = idx(btns, _ => _[0].payload);
+
+              return typeof btnPayload === 'string' && btnPayload.length > 0
+                ? [
+                  200, {
+                    ...expected.successMessageId,
+                    recipient_id: recipientId,
+                  },
+                ]
+                : [400, { ...expected.missingPostbackTypeButtonPayload }];
+            }
+
+            /** NOTE: URL buttons */
+            if (btnType === 'web_url') {
+              const btnUrl = idx(btns, _ => _[0].url);
+
+              if (btnUrl == null) {
+                return [400, { ...expected.missingUrlTypeButtonUrl }];
+              }
+
+              return isUrl(btnUrl)
+                ? [
+                  200, {
+                    ...expected.successMessageId,
+                    recipient_id: recipientId,
+                  },
+                ]
+                : [400, { ...expected.invalidUrlButtonsUrl }];
+            }
+          }
           default: {
             console.log('#nock-default');
 
             return [
-              200,
+              500,
               {
-                status: 200,
+                error: {
+                  message: `No match for ${JSON.stringify(reqBody)}`,
+                },
               },
             ];
           }

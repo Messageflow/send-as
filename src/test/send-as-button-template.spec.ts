@@ -172,7 +172,7 @@ describe('send-as-button-template', () => {
               buttons: [
                 {
                   type: 'web_url',
-                  title: 'test-web_url-button-title',
+                  title: 'test-url-button-title',
                   url: null,
                 },
               ],
@@ -188,44 +188,116 @@ describe('send-as-button-template', () => {
     }
   });
 
-  // TODO: To test invalid url
-  // TODO: To test valid web_url
+  test('name_placeholder[buttons][0][url] should represent a valid URL', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
 
-  // test('sendAsButtonTemplate works (postbackButton)', async () => {
-  //   const {
-  //     fbGraphApiUrl,
-  //     testReceipientId,
-  //   } = await config();
+      await sendAsButtonTemplate({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'test button template',
+              buttons: [
+                {
+                  type: 'web_url',
+                  title: 'test-url-button-title',
+                  url: '/test-invalid-url',
+                },
+              ],
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+    } catch (e) {
+      expect(e).toEqual({ ...expected.invalidUrlButtonsUrl });
+    }
+  });
 
-  //   try {
-  //     await sendAsButtonTemplate({
-  //       url: `${fbGraphApiUrl}`,
-  //       message: {
-  //         attachment: {
-  //           type: 'template',
-  //           payload: {
-  //             template_type: 'button',
-  //             text: 'test button template',
-  //             buttons: [
-  //               {
-  //                 type: 'postback',
-  //                 payload: 'test-postback-button-payload',
-  //                 title: 'test-postback-button-title',
-  //               },
-  //             ],
-  //           },
-  //         },
-  //       },
-  //       recipient: {
-  //         id: testReceipientId,
-  //       },
-  //     });
-  //   } catch (e) {
-  //     expect(e).toEqual({
-  //       recipient_id: testReceipientId,
-  //       message_id: expect.any(String),
-  //     });
-  //   }
-  // });
+  test('sendAsButtonTemplate works (postbackButton)', async () => {
+    const {
+      fbGraphApiUrl,
+      testReceipientId,
+    } = await config();
+
+    try {
+      const d = await sendAsButtonTemplate({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'test button template',
+              buttons: [
+                {
+                  type: 'postback',
+                  payload: 'test-postback-button-payload',
+                  title: 'test-postback-button-title',
+                },
+              ],
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+
+      expect(d).toEqual({
+        recipient_id: testReceipientId,
+        message_id: expect.any(String),
+      });
+    } catch (e) {
+      throw e;
+    }
+  });
+
+  test('sendAsButtonTemplate works (urlButton)', async () => {
+    const {
+      fbGraphApiUrl,
+      testReceipientId,
+    } = await config();
+
+    try {
+      const d = await sendAsButtonTemplate({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'test button template',
+              buttons: [
+                {
+                  type: 'web_url',
+                  url: 'https://test-url.com/test-url',
+                  title: 'test-url-button-title',
+                },
+              ],
+            },
+          },
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+
+      expect(d).toEqual({
+        recipient_id: testReceipientId,
+        message_id: expect.any(String),
+      });
+    } catch (e) {
+      throw e;
+    }
+  });
 
 });
