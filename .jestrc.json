@@ -40,9 +40,10 @@
     }
   },
   "collectCoverageFrom": [
-    "**/src/**/*.{ts|tsx}",
     "!**/node_modules/**",
-    "!**/src/test/**/*.{ts|tsx}"
+    "!**/src/demo/**/*.{ts|tsx}",
+    "!**/src/test/**/*.{ts|tsx}",
+    "**/src/**/*.{ts|tsx}"
   ],
   "verbose": true,
   "bail": true,

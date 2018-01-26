@@ -253,6 +253,15 @@ export const receiptTemplate = {
   },
 };
 
+export const missingSenderAction = {
+  error: {
+    message: '(#100) Must send either message or state',
+    type: 'OAuthException',
+    code: 100,
+    error_subcode: 2018015,
+    fbtrace_id: 'HZIJL0CsFGS',
+  },
+};
 export const successMessageId = {
   message_id: 'mid.$cAaIwD89I0sNnyYILOvHmdZcTp7vX',
 };

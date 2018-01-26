@@ -12,12 +12,9 @@ import * as expected from './expected';
 
 describe('send-as-receipt-template', () => {
   beforeEach(async () => {
-    const { fbPageAccesToken } = await config();
-
     await nocky({
       url: TEST_URL,
       apiVersion: TEST_API_VERSION,
-      pageAccessToken: fbPageAccesToken,
     });
   });
 
@@ -294,7 +291,5 @@ describe('send-as-receipt-template', () => {
       throw e;
     }
   });
-
-  // TODO: To test supported currency, e.g. USD
 
 });

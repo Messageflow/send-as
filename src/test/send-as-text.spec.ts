@@ -1,7 +1,7 @@
 // @ts-check
 
 /** Import other modules */
-import sendAsReadReceipt from '../send-as-read-receipt';
+import sendAsText from '../send-as-text';
 import config, {
   killNocky,
   nocky,
@@ -10,7 +10,7 @@ import config, {
 } from './config';
 import * as expected from './expected';
 
-describe('send-as-read-receipt', () => {
+describe('send-as-text', () => {
   beforeEach(async () => {
     await nocky({
       url: TEST_URL,
@@ -20,35 +20,41 @@ describe('send-as-read-receipt', () => {
 
   afterEach(async () => await killNocky());
 
-  test('sendAsReadReceipt fails', async () => {
+  test('Message cannot be empty, must provide valid attachment or text', async () => {
     try {
       const {
         fbGraphApiUrl,
         testReceipientId,
       } = await config();
 
-      await sendAsReadReceipt({
-        url: `${fbGraphApiUrl}/error`,
+      await sendAsText({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          text: null, /** text: '', */
+        },
         recipient: {
           id: testReceipientId,
         },
       });
     } catch (e) {
       expect(e).toEqual({
-        ...expected.missingSenderAction,
+        ...expected.emptyMessage,
       });
     }
   });
 
-  test('sendAsReadReceipt works', async () => {
+  test('sendAsText works', async () => {
     try {
       const {
         fbGraphApiUrl,
         testReceipientId,
       } = await config();
 
-      const d = await sendAsReadReceipt({
+      const d = await sendAsText({
         url: `${fbGraphApiUrl}`,
+        message: {
+          text: 'Hello, World!',
+        },
         recipient: {
           id: testReceipientId,
         },

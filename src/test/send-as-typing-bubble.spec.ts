@@ -1,7 +1,7 @@
 // @ts-check
 
 /** Import other modules */
-import sendAsReadReceipt from '../send-as-read-receipt';
+import sendAsTypingBubble from '../send-as-typing-bubble';
 import config, {
   killNocky,
   nocky,
@@ -10,7 +10,7 @@ import config, {
 } from './config';
 import * as expected from './expected';
 
-describe('send-as-read-receipt', () => {
+describe('send-as-text', () => {
   beforeEach(async () => {
     await nocky({
       url: TEST_URL,
@@ -20,14 +20,14 @@ describe('send-as-read-receipt', () => {
 
   afterEach(async () => await killNocky());
 
-  test('sendAsReadReceipt fails', async () => {
+  test('sendAsTypingBubble fails', async () => {
     try {
       const {
         fbGraphApiUrl,
         testReceipientId,
       } = await config();
 
-      await sendAsReadReceipt({
+      await sendAsTypingBubble({
         url: `${fbGraphApiUrl}/error`,
         recipient: {
           id: testReceipientId,
@@ -40,14 +40,14 @@ describe('send-as-read-receipt', () => {
     }
   });
 
-  test('sendAsReadReceipt works', async () => {
+  test('sendAsTypingBubble works', async () => {
     try {
       const {
         fbGraphApiUrl,
         testReceipientId,
       } = await config();
 
-      const d = await sendAsReadReceipt({
+      const d = await sendAsTypingBubble({
         url: `${fbGraphApiUrl}`,
         recipient: {
           id: testReceipientId,
@@ -55,7 +55,6 @@ describe('send-as-read-receipt', () => {
       });
 
       expect(d).toEqual({
-        message_id: expect.any(String),
         recipient_id: testReceipientId,
       });
     } catch (e) {

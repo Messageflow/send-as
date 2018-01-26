@@ -12,12 +12,9 @@ import * as expected from './expected';
 
 describe('send-as-quick-reply', () => {
   beforeEach(async () => {
-    const { fbPageAccesToken } = await config();
-
     await nocky({
       url: TEST_URL,
       apiVersion: TEST_API_VERSION,
-      pageAccessToken: fbPageAccesToken,
     });
   });
 

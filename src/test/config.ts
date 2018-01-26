@@ -3,7 +3,6 @@
 export declare interface NockyParams {
   url: string;
   apiVersion: string;
-  pageAccessToken: string;
 }
 export declare interface Config {
   fbGraphApiUrl: string;
@@ -39,7 +38,6 @@ async function randomi(byteSize?: number) {
 export async function nocky({
   url,
   apiVersion,
-  pageAccessToken,
 }: NockyParams) {
   try {
     if (typeof url !== 'string' || !url.length) {
@@ -49,17 +47,15 @@ export async function nocky({
     nock(url)
       .persist()
       .post(`/${apiVersion}/me/messages/error`)
-      .reply((uri, reqBody) => {
+      .reply((_, reqBody) => {
 
         const {
           sender_action,
         } = reqBody;
 
-        if (/^mark_seen/i.test(sender_action)) {
+        if (/^(mark_seen|typing)/i.test(sender_action)) {
           return [500, {
-            error: {
-              message: 'Should return error',
-            },
+            ...expected.missingSenderAction,
           }];
         }
 
@@ -73,9 +69,7 @@ export async function nocky({
     nock(url)
       .persist()
       .post(`/${apiVersion}/me/messages`)
-      .reply((uri, reqBody) => {
-        // console.log('#nock-post', uri, JSON.stringify(reqBody, null, 2));
-
+      .reply((_, reqBody) => {
         const {
           sender_action,
           recipient,
@@ -327,6 +321,20 @@ export async function nocky({
             if (idx(messageQuickRepliesQuickReply, _ => _.payload) == null) {
               return [400, {
                 ...expected.quickReplies.missingMessageQuickRepliesQuickReplyPayload,
+              }];
+            }
+
+            return [200, {
+              ...expected.successMessageId,
+              recipient_id: recipientId,
+            }];
+          }
+          case messageKeys.includes('text'): {
+            const messageText = idx(message, _ => _.text);
+
+            if (typeof messageText !== 'string' || !messageText.length) {
+              return [400, {
+                ...expected.emptyMessage,
               }];
             }
 
