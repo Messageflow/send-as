@@ -69,7 +69,7 @@ export async function nocky({
     nock(url)
       .persist()
       .post(`/${apiVersion}/me/messages`)
-      .reply((_, reqBody) => {
+      .reply((__, reqBody) => {
         const {
           sender_action,
           recipient,
@@ -296,7 +296,6 @@ export async function nocky({
                 ...expected.emptyMessage,
               }];
             }
-
 
             if (!idx(message, _ => _.quick_replies.length)) {
               return [400, {
