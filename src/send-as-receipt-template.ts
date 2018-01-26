@@ -35,7 +35,7 @@ export declare interface SendAsReceiptTemplateMessagePayload {
   currency: string;
   payment_method: string;
   timestamp?: number; /** Timestamp of the order in seconds */
-  elements: SendAsReceiptTemplateMessagePayloadElements[]; /** 100 elem limit */
+  elements?: SendAsReceiptTemplateMessagePayloadElements[]; /** 100 elem limit */
   address?: SendAsReceiptTemplateMessagePayloadAddress;
   summary: SendAsReceiptTemplateMessagePayloadSummary;
   adjustments?: SendAsReceiptTemplateMessagePayloadAdjustment[];

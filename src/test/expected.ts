@@ -192,6 +192,66 @@ export const quickReplies = {
     },
   },
 };
+export const receiptTemplate = {
+  missingNamePlaceholderRecipientName: {
+    error: {
+      message: '(#100) The parameter name_placeholder[recipient_name] is required',
+      type: 'OAuthException',
+      code: 100,
+      fbtrace_id: 'D+KXhualr49',
+    },
+  },
+  missingNamePlaceholderOrderNumber: {
+    error: {
+      message: '(#100) The parameter name_placeholder[order_number] is required',
+      type: 'OAuthException',
+      code: 100,
+      fbtrace_id: 'GP6kXn99i1X',
+    },
+  },
+  missingNamePlaceholderCurrency: {
+    error: {
+      message: '(#100) The parameter name_placeholder[currency] is required',
+      type: 'OAuthException',
+      code: 100,
+      fbtrace_id: 'Co8TjqYo\/EH',
+    },
+  },
+  currencyCodeNotSupported: {
+    error: {
+      message: '(#100) The currency code \'usd\' is not supported',
+      type: 'OAuthException',
+      code: 100,
+      fbtrace_id: 'GdRUiZPiL+Q',
+    },
+  },
+  missingNamePlaceholderPaymentMethod: {
+    error: {
+      message: '(#100) The parameter name_placeholder[payment_method] is required',
+      type: 'OAuthException',
+      code: 100,
+      fbtrace_id: 'D+ktiCibYZ7',
+    },
+  },
+  missingNamePlaceholderSummary: {
+    error: {
+      message: '(#100) The parameter name_placeholder[summary] is required',
+      type: 'OAuthException',
+      code: 100,
+      fbtrace_id: 'GIg1iEFAd0Q',
+    },
+  },
+  invalidPaymentSummary: {
+    error: {
+      // tslint:disable-next-line:max-line-length
+      message: '(#100) The amount you specified in payment summary is invalid. Please verify that it is a valid positive amount and is supported by its currency in terms of decimal places.',
+      type: 'OAuthException',
+      code: 100,
+      error_subcode: 2018055,
+      fbtrace_id: 'DRUZe3U2w1c',
+    },
+  },
+};
 
 export const successMessageId = {
   message_id: 'mid.$cAaIwD89I0sNnyYILOvHmdZcTp7vX',

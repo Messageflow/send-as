@@ -224,6 +224,67 @@ export async function nocky({
                   recipient_id: recipientId,
                 }];
               }
+              case idx(message, _ => _.attachment.payload.template_type) === 'receipt': {
+                const attachmentPayload = idx(message, _ => _.attachment.payload);
+
+                if (idx(attachmentPayload, _ => _.recipient_name) == null) {
+                  return [400, {
+                    ...expected.receiptTemplate.missingNamePlaceholderRecipientName,
+                  }];
+                }
+
+                if (idx(attachmentPayload, _ => _.order_number) == null) {
+                  return [400, {
+                    ...expected.receiptTemplate.missingNamePlaceholderOrderNumber,
+                  }];
+                }
+
+                if (idx(attachmentPayload, _ => _.currency) == null) {
+                  return [400, {
+                    ...expected.receiptTemplate.missingNamePlaceholderCurrency,
+                  }];
+                }
+
+                /** NOTE: Simple test against 'usd', 'USD' is supported */
+                if (/^usd/.test(idx(attachmentPayload, _ => _.currency))) {
+                  return [400, {
+                    ...expected.receiptTemplate.currencyCodeNotSupported,
+                  }];
+                }
+
+                if (idx(attachmentPayload, _ => _.payment_method) == null) {
+                  return [400, {
+                    ...expected.receiptTemplate.missingNamePlaceholderPaymentMethod,
+                  }];
+                }
+
+                if (idx(attachmentPayload, _ => _.summary) == null) {
+                  return [400, {
+                    ...expected.receiptTemplate.missingNamePlaceholderSummary,
+                  }];
+                }
+
+                const summaryTotalCost = idx(attachmentPayload, _ => _.summary.total_cost);
+
+                /**
+                 * NOTE: Simple test on summary[total_cost]
+                 * - Must not be a string or empty string value
+                 * - Must not have decimals greater than 2 for USD.
+                 */
+                if (
+                  (typeof summaryTotalCost === 'string' && summaryTotalCost.length > 0)
+                    || `${summaryTotalCost}`.replace(/\d+(?:\.(\d+))/i, '$1').length > 2
+                ) {
+                  return [400, {
+                    ...expected.receiptTemplate.invalidPaymentSummary,
+                  }];
+                }
+
+                return [200, {
+                  ...expected.successMessageId,
+                  recipient_id: recipientId,
+                }];
+              }
               default: {
                 return [500, {
                   error: {
