@@ -6,3 +6,6 @@ node_js:
 script:
   - npm run check
   - npm run test
+after_script:
+  - npx -p coveralls -- 'cat ./coverage/lcov.info | coveralls'
+  - npx -p codecov -- 'cat ./coverage/lcov.info | codecov'
