@@ -33,6 +33,7 @@ This simple utility library makes sending all these types of messages easier but
 
 | Message Type | Utility method |
 | --- | :---: |
+| [custom payload][custom-payload-ref-url] | ✅ |
 | [read receipt][read-receipt-ref-url] | ✅ |
 | [typing bubble][typing-bubble-ref-url] | ✅ |
 | [text][text-ref-url] | ✅ |
@@ -214,13 +215,15 @@ void async function demoSendAsCustomPayload() {
 [recipient-ref-url]: #recipient
 [response-ref-url]: #response
 [errorresponse-ref-url]: #errorresponse
-[read-receipt-ref-url]: #sendasreadreceiptrecipientname
-[typing-bubble-ref-url]: #sendastypingbubblerecipientname
-[text-ref-url]: #sendastextrecipientname
-[quick-reply-ref-url]: #sendasquickreplyrecipientname
-[button-template-ref-url]: #sendasbuttontemplaterecipientname
-[generic-template-ref-url]: #sendasgenerictemplaterecipientname
-[receipt-template-ref-url]: #sendasreceipttemplaterecipientname
+[custom-payload-ref-url]: #sendasrecipient-message
+[read-receipt-ref-url]: #sendasreadreceiptrecipient-message
+[typing-bubble-ref-url]: #sendastypingbubblerecipient-message
+[text-ref-url]: #sendastextrecipient-message
+[quick-reply-ref-url]: #sendasquickreplyrecipient-message
+[button-template-ref-url]: #sendasquickreplyrecipient-message
+[generic-template-ref-url]: #sendasgenerictemplaterecipient-message
+[receipt-template-ref-url]: #sendasreceipttemplaterecipient-message
+
 
 
 [nodei-badge]: https://nodei.co/npm/@messageflow/send-as.png?downloads=true&downloadRank=true&stars=true
