@@ -173,4 +173,30 @@ describe('send-as', () => {
     }
   });
 
+  test('sendAs works (sending as custom payload)', async () => {
+    try {
+      const {
+        fbGraphApiUrl,
+        testReceipientId,
+      } = await config();
+
+      const d = await sendAs({
+        url: `${fbGraphApiUrl}`,
+        message: {
+          text: 'test-send-as-text',
+        },
+        recipient: {
+          id: testReceipientId,
+        },
+      });
+
+      expect(d).toEqual({
+        message_id: expect.any(String),
+        recipient_id: testReceipientId,
+      });
+    } catch (e) {
+      throw e;
+    }
+  });
+
 });

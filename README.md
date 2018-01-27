@@ -33,13 +33,13 @@ This simple utility library makes sending all these types of messages easier but
 
 | Message Type | Utility method |
 | --- | :---: |
-| text | ✅ |
-| quick_replies | ✅ |
-| read receipt | ✅ |
-| typing bubble | ✅ |
-| generic template | ✅ |
-| button template | ✅ |
-| receipt template | ✅ |
+| [read receipt][read-receipt-ref-url] | ✅ |
+| [typing bubble][typing-bubble-ref-url] | ✅ |
+| [text][text-ref-url] | ✅ |
+| [quick_replies][quick-reply-ref-url] | ✅ |
+| [button template][button-template-ref-url] | ✅ |
+| [generic template][generic-template-ref-url] | ✅ |
+| [receipt template][receipt-template-ref-url] | ✅ |
 
 ## Table of contents
 
@@ -62,21 +62,139 @@ $ npm install --save @messageflow/send-as
 #### Node.js
 
 ```js
-const greeting = require('@messageflow/send-as');
+const {
+  sendAs,
+  // sendAsButtonTemplate,
+  // sendAsGenericTemplate,
+  // sendAsQuickReply,
+  // sendAsReadReceipt,
+  // sendAsReceiptTemplate,
+  // sendAsText,
+  // sendAsTypingBubble,
+} = require('@messageflow/send-as');
+
+/** Send as custom payload */
+void async function demoSendAsCustomPayload() {
+  try {
+    const recipient = {
+      /**
+       * These IDs are page-scoped IDs (PSID).
+       * This means that the IDs are unique for a given page.
+       **/
+      id: '<PSID>',
+    };
+    const message = {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'media',
+          elements: [
+            {
+              media_type: '<image|video>',
+              url: '<FACEBOOK_URL>',
+            },
+          ],
+        },
+      },
+    };
+    const d = await sendAs(recipient, message);
+
+    assert.deepEqual(d, {
+      message_id: 'mid.$cAAJsujCd2ORj_1qmrFdzhVa-4cvO',
+      recipient_id: '<PSID>',
+    }); // OK
+  } catch (e) {
+    console.error('Failed to send as custom payload', e);
+  }
+}();
 ```
 
 #### Native ES modules or TypeScript
 
 ```ts
-import greeting from '@messageflow/send-as';
+import {
+  sendAs,
+  // sendAsButtonTemplate,
+  // sendAsGenericTemplate,
+  // sendAsQuickReply,
+  // sendAsReadReceipt,
+  // sendAsReceiptTemplate,
+  // sendAsText,
+  // sendAsTypingBubble,
+} from '@messageflow/send-as';
+
+/** Send as custom payload */
+void async function demoSendAsCustomPayload() {
+  try {
+    const recipient = {
+      /**
+       * These IDs are page-scoped IDs (PSID).
+       * This means that the IDs are unique for a given page.
+       **/
+      id: '<PSID>',
+    };
+    const message = {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'media',
+          elements: [
+            {
+              media_type: '<image|video>',
+              url: '<FACEBOOK_URL>',
+            },
+          ],
+        },
+      },
+    };
+    const d = await sendAs(recipient, message);
+
+    assert.deepEqual(d, {
+      message_id: 'mid.$cAAJsujCd2ORj_1qmrFdzhVa-4cvO',
+      recipient_id: '<PSID>',
+    }); // OK
+  } catch (e) {
+    console.error('Failed to send as custom payload', e);
+  }
+}();
 ```
 
 ## API Reference
 
-### greeting(name)
+### Recipient
+  
+  - `id` <[string][string-mdn-url]> PSID of the message recipient.
 
-  - name <[string][string-mdn-url]> Name of the person to greet at.
-  - returns: <[Promise][promise-mdn-url]<[string][string-mdn-url]>> Promise which resolves with a greeting message.
+### Response
+
+  - `recipient_id` <[string][string-mdn-url]> Unique ID for the user which is usually the `PSID`.
+  - `message_id` <[string][string-mdn-url]> Unique ID for the message.
+
+### ErrorResponse
+
+  - `error` <[Object][object-mdn-url]> Error object when a request fails.
+    - `message` <[string][string-mdn-url]> Error message.
+    - `type` <[string][string-mdn-url]> Error type.
+    - `code` <[number][number-mdn-url]> Error code.
+    - `fbtrace_id` <[string][string-mdn-url]> Unique ID for tracing the error request.
+
+### sendAs(recipient, message)
+
+  - `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+  - `message` <[Object][object-mdn-url]> Message to be sent.
+    - `text` <[string][string-mdn-url]> Message text. Must be UTF-8 and has a 2000 character limit. _`text` or `attachment` must be set._
+    - `attachment` <[Object][object-mdn-url]> Used to send messages with media or structured messages. _`text` or `attachment` must be set._
+    - `quick_replies` <[Object][object-mdn-url]> Optional array of `quick_reply` to be sent with messages.
+    - `metadata` <[string][string-mdn-url]> Optional custom string that is delivered as a `message echo`. 1000 character limit.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
+### sendAsReadReceipt(recipient, message)
+### sendAsTypingBubble(recipient, message)
+### sendAsText(recipient, message)
+### sendAsQuickReply(recipient, message)
+### sendAsButtonTemplate(recipient, message)
+### sendAsGenericTemplate(recipient, message)
+### sendAsReceiptTemplate(recipient, message)
 
 ## License
 
@@ -88,10 +206,21 @@ import greeting from '@messageflow/send-as';
 [node-js-url]: https://nodejs.org
 [npm-url]: https://www.npmjs.com
 [node-releases-url]: https://nodejs.org/en/download/releases
+[object-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
 [string-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+[number-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
 [promise-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [fb-send-api-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api
-
+[recipient-ref-url]: #recipient
+[response-ref-url]: #response
+[errorresponse-ref-url]: #errorresponse
+[read-receipt-ref-url]: #sendasreadreceiptrecipientname
+[typing-bubble-ref-url]: #sendastypingbubblerecipientname
+[text-ref-url]: #sendastextrecipientname
+[quick-reply-ref-url]: #sendasquickreplyrecipientname
+[button-template-ref-url]: #sendasbuttontemplaterecipientname
+[generic-template-ref-url]: #sendasgenerictemplaterecipientname
+[receipt-template-ref-url]: #sendasreceipttemplaterecipientname
 
 
 [nodei-badge]: https://nodei.co/npm/@messageflow/send-as.png?downloads=true&downloadRank=true&stars=true
@@ -110,7 +239,7 @@ import greeting from '@messageflow/send-as';
 
 [codebeat-badge]: https://codebeat.co/badges/cb737f7f-0fc7-4d80-afdc-41b0baf53f42?style=flat-square
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/dea8f78a242b4fe092c28223b960c951?style=flat-square
-[inch-badge]: http://inch-ci.org/github/Messageflow/send-as.svg?branch=master?style=flat-square
+[inch-badge]: http://inch-ci.org/github/Messageflow/send-as.svg?branch=master&style=flat-square
 
 
 
