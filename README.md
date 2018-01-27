@@ -195,6 +195,34 @@ void async function demoSendAsCustomPayload() {
 - `showTyping` <[boolean][boolean-mdn-url]> If true, display typing bubble. Defaults to `true`.
 - `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
 
+### SendAsTextParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `message` <[Object][object-mdn-url]> Message to be sent.
+  - `text` <[string][string-mdn-url]> Message text. Must be UTF-8 and has a 2000 character limit.
+- `notificationType` <[string][string-mdn-url]> Optional push notification type.
+  - `REGULAR`: sound/ vibration.
+  - `SILENT_PUSH`: on-screen notification only.
+  - `NO_PUSH`: no notification.
+- `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+- 
+### SendAsQuickReplyParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `message` <[Object][object-mdn-url]> Message to be sent.
+  - `text` <[string][string-mdn-url]> Non-empty message text to send with the quick replies. `text` or `attachment` must be set. 2000 character limit.
+  - `attachment` <[Object][object-mdn-url]> Optional attachment to send with the quick replies. `text` or `attachment` must be set.
+  - `quick_replies` <[Array][array-mdn-url]&lt;[quick_reply][send-api-quick-reply-url]&gt;> An array of objects the describe the quick reply [buttons][send-messages-buttons-url] to send. A maximum of 11 quick replies are supported.
+- `notificationType` <[string][string-mdn-url]> Optional push notification type.
+  - `REGULAR`: sound/ vibration.
+  - `SILENT_PUSH`: on-screen notification only.
+  - `NO_PUSH`: no notification.
+- `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+
 ### Response
 
   - `recipient_id` <[string][string-mdn-url]> Unique ID for the user which is usually the `PSID`.
@@ -210,21 +238,29 @@ void async function demoSendAsCustomPayload() {
 
 ### sendAs(params)
 
-  - `params` <[SendAsParams][sendasparams-ref-url]> Parameters for `sendAs` method.
+  - `params` <[SendAsParams][sendasparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsReadReceipt(params)
 
-  - `params` <[SendAsReadReceiptParams][sendasreadreceiptparams-ref-url]> Parameters for `sendAsReadReceipt` method.
+  - `params` <[SendAsReadReceiptParams][sendasreadreceiptparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsTypingBubble(params)
 
-- `params` <[SendAsTypingBubbleParams][sendasreadreceiptparams-ref-url]> Parameters for `sendAsReadReceipt` method.
+- `params` <[SendAsTypingBubbleParams][sendastypingbubbleparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for its recipient.
 
 ### sendAsText(params)
+
+- `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
+  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
 ### sendAsQuickReply(params)
+
+- `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
+  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
 ### sendAsButtonTemplate(params)
 ### sendAsGenericTemplate(params)
 ### sendAsReceiptTemplate(params)
@@ -243,11 +279,15 @@ void async function demoSendAsCustomPayload() {
 [string-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
 [number-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
 [boolean-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[array-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [promise-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [fb-send-api-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api
 [recipient-ref-url]: #recipient
 [sendasparams-ref-url]: #sendasparams
 [sendasreadreceiptparams-ref-url]: #sendasreadreceiptparams
+[sendastypingbubbleparams-ref-url]: #sendastypingbubbleparams
+[sendastextparams-ref-url]: #sendastextparams
+[sendasquickreplyparams-ref-url]: #sendasquickreplyparams
 [response-ref-url]: #response
 [errorresponse-ref-url]: #errorresponse
 [custom-payload-ref-url]: #sendasparams
@@ -259,6 +299,8 @@ void async function demoSendAsCustomPayload() {
 [generic-template-ref-url]: #sendasgenerictemplateparams
 [receipt-template-ref-url]: #sendasreceipttemplateparams
 [node-fetch-options-url]: https://github.com/bitinn/node-fetch#options
+[send-messages-buttons-url]: https://developers.facebook.com/docs/messenger-platform/send-messages/buttons
+[send-api-quick-reply-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api/quick-replies#quick_reply
 
 
 
