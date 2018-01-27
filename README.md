@@ -25,6 +25,8 @@
 
 ## Table of contents
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/31ec694d65bd4fa092e3a0a7b9bbcf5e)](https://www.codacy.com/app/motss/send-as?utm_source=github.com&utm_medium=referral&utm_content=Messageflow/send-as&utm_campaign=badger)
+
 - [Pre-requisite](#pre-requisite)
 - [Setup](#setup)
   - [Install](#install)
