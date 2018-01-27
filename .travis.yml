@@ -7,5 +7,5 @@ script:
   - npm run check
   - npm run test
 after_script:
-  - npm install coveralls -- 'cat ./coverage/lcov.info | coveralls'
-  - npm install codecov -- 'cat ./coverage/lcov.info | codecov'
+  - npm install coveralls && 'cat ./coverage/lcov.info | coveralls'
+  - npm install codecov && 'cat ./coverage/lcov.info | codecov'
