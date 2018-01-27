@@ -166,6 +166,35 @@ void async function demoSendAsCustomPayload() {
   
   - `id` <[string][string-mdn-url]> PSID of the message recipient.
 
+### SendAsParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `message` <[Object][object-mdn-url]> Message to be sent.
+  - `text` <[string][string-mdn-url]> Message text. Must be UTF-8 and has a 2000 character limit. _`text` or `attachment` must be set._
+  - `attachment` <[Object][object-mdn-url]> Used to send messages with media or structured messages. _`text` or `attachment` must be set._
+  - `quick_replies` <[Object][object-mdn-url]> Optional array of `quick_reply` to be sent with messages.
+  - `metadata` <[string][string-mdn-url]> Optional custom string that is delivered as a `message echo`. 1000 character limit.
+- `notificationType` <[string][string-mdn-url]> Optional push notification type.
+  - `REGULAR`: sound/ vibration.
+  - `SILENT_PUSH`: on-screen notification only.
+  - `NO_PUSH`: no notification.
+- `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+
+### SendAsReadReceiptParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+- 
+### SendAsTypingBubbleParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `showTyping` <[boolean][boolean-mdn-url]> If true, display typing bubble. Defaults to `true`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+
 ### Response
 
   - `recipient_id` <[string][string-mdn-url]> Unique ID for the user which is usually the `PSID`.
@@ -179,23 +208,26 @@ void async function demoSendAsCustomPayload() {
     - `code` <[number][number-mdn-url]> Error code.
     - `fbtrace_id` <[string][string-mdn-url]> Unique ID for tracing the error request.
 
-### sendAs(recipient, message)
+### sendAs(params)
 
-  - `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
-  - `message` <[Object][object-mdn-url]> Message to be sent.
-    - `text` <[string][string-mdn-url]> Message text. Must be UTF-8 and has a 2000 character limit. _`text` or `attachment` must be set._
-    - `attachment` <[Object][object-mdn-url]> Used to send messages with media or structured messages. _`text` or `attachment` must be set._
-    - `quick_replies` <[Object][object-mdn-url]> Optional array of `quick_reply` to be sent with messages.
-    - `metadata` <[string][string-mdn-url]> Optional custom string that is delivered as a `message echo`. 1000 character limit.
+  - `params` <[SendAsParams][sendasparams-ref-url]> Parameters for `sendAs` method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
-### sendAsReadReceipt(recipient, message)
-### sendAsTypingBubble(recipient, message)
-### sendAsText(recipient, message)
-### sendAsQuickReply(recipient, message)
-### sendAsButtonTemplate(recipient, message)
-### sendAsGenericTemplate(recipient, message)
-### sendAsReceiptTemplate(recipient, message)
+### sendAsReadReceipt(params)
+
+  - `params` <[SendAsReadReceiptParams][sendasreadreceiptparams-ref-url]> Parameters for `sendAsReadReceipt` method.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
+### sendAsTypingBubble(params)
+
+- `params` <[SendAsTypingBubbleParams][sendasreadreceiptparams-ref-url]> Parameters for `sendAsReadReceipt` method.
+  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for its recipient.
+
+### sendAsText(params)
+### sendAsQuickReply(params)
+### sendAsButtonTemplate(params)
+### sendAsGenericTemplate(params)
+### sendAsReceiptTemplate(params)
 
 ## License
 
@@ -210,19 +242,23 @@ void async function demoSendAsCustomPayload() {
 [object-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
 [string-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
 [number-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+[boolean-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 [promise-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [fb-send-api-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api
 [recipient-ref-url]: #recipient
+[sendasparams-ref-url]: #sendasparams
+[sendasreadreceiptparams-ref-url]: #sendasreadreceiptparams
 [response-ref-url]: #response
 [errorresponse-ref-url]: #errorresponse
-[custom-payload-ref-url]: #sendasrecipient-message
-[read-receipt-ref-url]: #sendasreadreceiptrecipient-message
-[typing-bubble-ref-url]: #sendastypingbubblerecipient-message
-[text-ref-url]: #sendastextrecipient-message
-[quick-reply-ref-url]: #sendasquickreplyrecipient-message
-[button-template-ref-url]: #sendasquickreplyrecipient-message
-[generic-template-ref-url]: #sendasgenerictemplaterecipient-message
-[receipt-template-ref-url]: #sendasreceipttemplaterecipient-message
+[custom-payload-ref-url]: #sendasparams
+[read-receipt-ref-url]: #sendasreadreceiptparams
+[typing-bubble-ref-url]: #sendastypingbubbleparams
+[text-ref-url]: #sendastextparams
+[quick-reply-ref-url]: #sendasquickreplyparams
+[button-template-ref-url]: #sendasquickreplyparams
+[generic-template-ref-url]: #sendasgenerictemplateparams
+[receipt-template-ref-url]: #sendasreceipttemplateparams
+[node-fetch-options-url]: https://github.com/bitinn/node-fetch#options
 
 
 
