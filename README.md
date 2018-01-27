@@ -187,7 +187,7 @@ void async function demoSendAsCustomPayload() {
 - `url` <[string][string-mdn-url]> URL to send message to.
 - `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
 - `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
-- 
+
 ### SendAsTypingBubbleParams
 
 - `url` <[string][string-mdn-url]> URL to send message to.
@@ -207,7 +207,7 @@ void async function demoSendAsCustomPayload() {
   - `NO_PUSH`: no notification.
 - `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
 - `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
-- 
+
 ### SendAsQuickReplyParams
 
 - `url` <[string][string-mdn-url]> URL to send message to.
@@ -248,17 +248,17 @@ void async function demoSendAsCustomPayload() {
 
 ### sendAsTypingBubble(params)
 
-- `params` <[SendAsTypingBubbleParams][sendastypingbubbleparams-ref-url]> Parameters required to call the method.
+  - `params` <[SendAsTypingBubbleParams][sendastypingbubbleparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for its recipient.
 
 ### sendAsText(params)
 
-- `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
+  - `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsQuickReply(params)
 
-- `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
+  - `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsButtonTemplate(params)
