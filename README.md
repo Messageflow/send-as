@@ -330,10 +330,14 @@ ___
   - `params` <[SendAsParams][sendasparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
+
 ### sendAsReadReceipt(params)
 
   - `params` <[SendAsReadReceiptParams][sendasreadreceiptparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsTypingBubble(params)
 
@@ -345,25 +349,35 @@ ___
   - `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
+
 ### sendAsQuickReply(params)
 
   - `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsButtonTemplate(params)
 
   - `params` <[SendAsButtonTemplateParams][sendasbuttontemplateparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
+
 ### sendAsGenericTemplate(params)
 
   - `params` <[SendAsGenericTemplateParams][sendasgenerictemplateparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
+
 ### sendAsReceiptTemplate(params)
 
   - `params` <[SendAsReceiptTemplateParams][sendasreceipttemplateparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
+The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ## License
 
