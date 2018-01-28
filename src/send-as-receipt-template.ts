@@ -28,7 +28,7 @@ export declare interface SendAsReceiptTemplateMessagePayloadAdjustment {
 }
 export declare interface SendAsReceiptTemplateMessagePayload {
   template_type: 'receipt';
-  shareable?: boolean; /** Defaults to false */
+  sharable?: boolean; /** Defaults to false */
   recipient_name: string;
   merchant_name?: string; /** If present this is shown as logo text */
   order_number: string; /** Must be unique */

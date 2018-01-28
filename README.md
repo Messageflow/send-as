@@ -170,7 +170,7 @@ void async function demoSendAsCustomPayload() {
 
 - `url` <[string][string-mdn-url]> URL to send message to.
 - `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
-- `message` <[Object][object-mdn-url]> Message to be sent.
+- `message` <[Object][object-mdn-url]> Description of the message to be sent.
   - `text` <[string][string-mdn-url]> Message text. Must be UTF-8 and has a 2000 character limit. _`text` or `attachment` must be set._
   - `attachment` <[Object][object-mdn-url]> Used to send messages with media or structured messages. _`text` or `attachment` must be set._
   - `quick_replies` <[Object][object-mdn-url]> Optional array of `quick_reply` to be sent with messages.
@@ -199,7 +199,7 @@ void async function demoSendAsCustomPayload() {
 
 - `url` <[string][string-mdn-url]> URL to send message to.
 - `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
-- `message` <[Object][object-mdn-url]> Message to be sent.
+- `message` <[Object][object-mdn-url]> Description of the message to be sent.
   - `text` <[string][string-mdn-url]> Message text. Must be UTF-8 and has a 2000 character limit.
 - `notificationType` <[string][string-mdn-url]> Optional push notification type.
   - `REGULAR`: sound/ vibration.
@@ -212,10 +212,52 @@ void async function demoSendAsCustomPayload() {
 
 - `url` <[string][string-mdn-url]> URL to send message to.
 - `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
-- `message` <[Object][object-mdn-url]> Message to be sent.
+- `message` <[Object][object-mdn-url]> Description of the message to be sent.
   - `text` <[string][string-mdn-url]> Non-empty message text to send with the quick replies. `text` or `attachment` must be set. 2000 character limit.
   - `attachment` <[Object][object-mdn-url]> Optional attachment to send with the quick replies. `text` or `attachment` must be set.
   - `quick_replies` <[Array][array-mdn-url]&lt;[quick_reply][send-api-quick-reply-url]&gt;> An array of objects the describe the quick reply [buttons][send-messages-buttons-url] to send. A maximum of 11 quick replies are supported.
+- `notificationType` <[string][string-mdn-url]> Optional push notification type.
+  - `REGULAR`: sound/ vibration.
+  - `SILENT_PUSH`: on-screen notification only.
+  - `NO_PUSH`: no notification.
+- `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+- 
+### SendAsButtonTemplateParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `message` <[Object][object-mdn-url]> Description of the message to be sent.
+  - `attachment` <[Object][object-mdn-url]> An object describing attachments to the message.
+    - `type` <[string][string-mdn-url]> Value must be `template`.
+    - `payload` <[Object][object-mdn-url]> Payload of the template.
+      - `template_type` <[string][string-mdn-url]> Value must be `button`.
+      - `text` <[string][string-mdn-url]> Must be UTF-8 encoded text. 640 character limit.
+      - `buttons` <[Array][array-mdn-url]&lt;[button][send-messages-buttons-url]&gt;> An array of 1 - 3 buttons that appear as call-to-actions.
+- `notificationType` <[string][string-mdn-url]> Optional push notification type.
+  - `REGULAR`: sound/ vibration.
+  - `SILENT_PUSH`: on-screen notification only.
+  - `NO_PUSH`: no notification.
+- `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+- 
+### SendAsGenericTemplateParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `message` <[Object][object-mdn-url]> Description of the message to be sent.
+  - `attachment` <[Object][object-mdn-url]> An object describing attachments to the message.
+    - `type` <[string][string-mdn-url]> Value must be `template`.
+    - `payload` <[Object][object-mdn-url]> Payload of the template.
+      - `template_type` <[string][string-mdn-url]> Value must be `generic`.
+      - `elements` <[Array][array-mdn-url]&lt;[Object][object-mdn-url]&gt;> An array of element objects that describe instances of the generic template to be sent. A horizontally scrollable carousel forms when more than 1 element in a template. 10 elements limit.
+        - `title` <[string][string-mdn-url]> Title of the template. 80 character limit.
+        - `subtitle` <[string][string-mdn-url]> Optional subtitle of the template. 80 character limit.
+        - `image_url` <[string][string-mdn-url]> Optional image URL of the template.
+        - `default_action` <[Object][object-mdn-url]> Optional default action executed when the template is tapped. Has the same properties as [URL button][send-api-url-button-url], except the `title`.
+        - `buttons` <[Array][array-mdn-url]&lt;[button][send-messages-buttons-url]&gt;> Optional array of buttons to append to the template. 3 buttons limit for each element.
+      - `sharable` <[boolean][boolean-mdn-url]> Optional native share button in Messenger for the the template message. Defaults to `false`.
+      - `image_aspect_ratio` <[string][string-mdn-url]> Optional aspect ratio used to render images specified by `element.image_url`. Must be `horizontal` (1.91:1) or `square` (1:1). Defaults to `horizontal`.
 - `notificationType` <[string][string-mdn-url]> Optional push notification type.
   - `REGULAR`: sound/ vibration.
   - `SILENT_PUSH`: on-screen notification only.
@@ -262,7 +304,15 @@ void async function demoSendAsCustomPayload() {
   - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsButtonTemplate(params)
+
+  - `params` <[SendAsButtonTemplateParams][sendasbuttontemplateparams-ref-url]> Parameters required to call the method.
+  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
 ### sendAsGenericTemplate(params)
+
+  - `params` <[SendAsGenericTemplateParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
+  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+
 ### sendAsReceiptTemplate(params)
 
 ## License
@@ -288,6 +338,8 @@ void async function demoSendAsCustomPayload() {
 [sendastypingbubbleparams-ref-url]: #sendastypingbubbleparams
 [sendastextparams-ref-url]: #sendastextparams
 [sendasquickreplyparams-ref-url]: #sendasquickreplyparams
+[sendasbuttontemplateparams-ref-url]: #sendasbuttontemplateparams
+[sendasgenerictemplateparams-ref-url]: #sendasgenerictemplateparams
 [response-ref-url]: #response
 [errorresponse-ref-url]: #errorresponse
 [custom-payload-ref-url]: #sendasparams
@@ -295,13 +347,13 @@ void async function demoSendAsCustomPayload() {
 [typing-bubble-ref-url]: #sendastypingbubbleparams
 [text-ref-url]: #sendastextparams
 [quick-reply-ref-url]: #sendasquickreplyparams
-[button-template-ref-url]: #sendasquickreplyparams
+[button-template-ref-url]: #sendasbuttontemplateparams
 [generic-template-ref-url]: #sendasgenerictemplateparams
 [receipt-template-ref-url]: #sendasreceipttemplateparams
 [node-fetch-options-url]: https://github.com/bitinn/node-fetch#options
 [send-messages-buttons-url]: https://developers.facebook.com/docs/messenger-platform/send-messages/buttons
 [send-api-quick-reply-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api/quick-replies#quick_reply
-
+[send-api-url-button-url]: https://developers.facebook.com/docs/messenger-platform/send-api-reference/url-button
 
 
 [nodei-badge]: https://nodei.co/npm/@messageflow/send-as.png?downloads=true&downloadRank=true&stars=true

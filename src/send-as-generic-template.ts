@@ -17,7 +17,7 @@ export declare interface SendAsGenericTemplateMessagePayloadElements {
 }
 export declare interface SendAsGenericTemplateMessagePayload {
   template_type: 'generic';
-  shareable?: boolean; /** Defaults to false */
+  sharable?: boolean; /** Defaults to false */
   image_aspect_ratio?: 'horizontal' | 'square';
   elements: SendAsGenericTemplateMessagePayloadElements[]; /** 10 elem limit */
 }
