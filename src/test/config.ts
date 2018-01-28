@@ -343,8 +343,6 @@ export async function nocky({
             }];
           }
           default: {
-            console.log('#nock-default');
-
             return [500, {
               error: {
                 message: `No match for ${JSON.stringify(reqBody)}`,
