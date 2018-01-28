@@ -343,27 +343,27 @@ ___
 ### sendAsText(params)
 
   - `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsQuickReply(params)
 
   - `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsButtonTemplate(params)
 
   - `params` <[SendAsButtonTemplateParams][sendasbuttontemplateparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsGenericTemplate(params)
 
   - `params` <[SendAsGenericTemplateParams][sendasgenerictemplateparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsReceiptTemplate(params)
 
   - `params` <[SendAsReceiptTemplateParams][sendasreceipttemplateparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ## License
 
