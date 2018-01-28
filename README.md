@@ -222,7 +222,7 @@ void async function demoSendAsCustomPayload() {
   - `NO_PUSH`: no notification.
 - `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
 - `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
-- 
+
 ### SendAsButtonTemplateParams
 
 - `url` <[string][string-mdn-url]> URL to send message to.
@@ -240,7 +240,7 @@ void async function demoSendAsCustomPayload() {
   - `NO_PUSH`: no notification.
 - `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
 - `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
-- 
+
 ### SendAsGenericTemplateParams
 
 - `url` <[string][string-mdn-url]> URL to send message to.
@@ -265,6 +265,51 @@ void async function demoSendAsCustomPayload() {
 - `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
 - `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
 
+### SendAsReceiptTemplateParams
+
+- `url` <[string][string-mdn-url]> URL to send message to.
+- `recipient` <[Recipient][recipient-ref-url]> Description of the message recipient.
+- `message` <[Object][object-mdn-url]> Description of the message to be sent.
+  - `attachment` <[Object][object-mdn-url]> An object describing attachments to the message.
+    - `type` <[string][string-mdn-url]> Value must be `template`.
+    - `payload` <[Object][object-mdn-url]> Payload of the template.
+      - `template_type` <[string][string-mdn-url]> Value must be `receipt`.
+      - `recipient_name` <[string][string-mdn-url]> The recipient's name.
+      - `order_number` <[string][string-mdn-url]> Unique order number.
+      - `currency` <[string][string-mdn-url]> Currency of the payment.
+      - `payment_method` <[string][string-mdn-url]> Custom string about which payment method and account a customer used, e.g. _Visa 1234_
+      - `summary` <[Object][object-mdn-url]> Payment summary.
+        - `total_cost` <[number][number-mdn-url]> Total cost of the order, including sub-total, shipping, and tax.
+        - `subtotal` <[number][number-mdn-url]> Optional sub-total of the order.
+        - `shipping_cost` <[number][number-mdn-url]> Optional shipping cost of the order.
+        - `total_tax` <[number][number-mdn-url]> Optional tax of the order.
+      - `sharable` <[boolean][boolean-mdn-url]> Optional native share button in Messenger for the the template message. Defaults to `false`.
+      - `merchant_name` <[string][string-mdn-url]> Optional merchant's name. It is shown as logo text if this presents.
+      - `timestamp` <[number][number-mdn-url]> Optional timestamp of the order in seconds.
+      - `elements` <[Object][object-mdn-url]> Optional array of elements of the order. 100 elements limit. Order of the elements is not guaranteed.
+        - `title` <[string][string-mdn-url]> Name of the item.
+        - `price` <[number][number-mdn-url]> Price of the item. It is a free item when the value is `0`.
+        - `subtitle` <[string][string-mdn-url]> Optional description of the item.
+        - `quantity` <[number][number-mdn-url]> Optional quantity of the item.
+        - `currency` <[string][string-mdn-url]> Optional currency of the item price.
+        - `image_url` <[string][string-mdn-url]> Optional image URL of the item.
+      - `address` <[Object][object-mdn-url]> Optional shipping address of the order.
+        - `street_1` <[string][string-mdn-url]> Street address, line 1.
+        - `city` <[string][string-mdn-url]> City name of the address.
+        - `postal_code` <[string][string-mdn-url]> Postal code of the address.
+        - `state` <[string][string-mdn-url]> State abbreviation for U.S. addresses, or the region/ province for non U.S. addresses.
+        - `country` <[string][string-mdn-url]> 2-letter country code of the address.
+        - `street_2` <[string][string-mdn-url]> Optional street address, line 2.
+      - `adjustments` <[Object][object-mdn-url]> Optional array of payment adjustments, such as discounts.
+        - `name` <[string][string-mdn-url]> Name of the adjustment.
+        - `amount` <[number][number-mdn-url]> Amount of the adjustment.
+- `notificationType` <[string][string-mdn-url]> Optional push notification type.
+  - `REGULAR`: sound/ vibration.
+  - `SILENT_PUSH`: on-screen notification only.
+  - `NO_PUSH`: no notification.
+- `typingDelay` <[number][number-mdn-url]> Optional typing delay in milliseconds. Defaults to `500`.
+- `options` <[Object][object-mdn-url]> Optional request options. See [node-fetch options][node-fetch-options-url] for more details.
+
 ### Response
 
   - `recipient_id` <[string][string-mdn-url]> Unique ID for the user which is usually the `PSID`.
@@ -277,6 +322,8 @@ void async function demoSendAsCustomPayload() {
     - `type` <[string][string-mdn-url]> Error type.
     - `code` <[number][number-mdn-url]> Error code.
     - `fbtrace_id` <[string][string-mdn-url]> Unique ID for tracing the error request.
+
+___
 
 ### sendAs(params)
 
@@ -310,10 +357,13 @@ void async function demoSendAsCustomPayload() {
 
 ### sendAsGenericTemplate(params)
 
-  - `params` <[SendAsGenericTemplateParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
+  - `params` <[SendAsGenericTemplateParams][sendasgenerictemplateparams-ref-url]> Parameters required to call the method.
   - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ### sendAsReceiptTemplate(params)
+
+  - `params` <[SendAsReceiptTemplateParams][sendasreceipttemplateparams-ref-url]> Parameters required to call the method.
+  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 ## License
 
@@ -340,6 +390,7 @@ void async function demoSendAsCustomPayload() {
 [sendasquickreplyparams-ref-url]: #sendasquickreplyparams
 [sendasbuttontemplateparams-ref-url]: #sendasbuttontemplateparams
 [sendasgenerictemplateparams-ref-url]: #sendasgenerictemplateparams
+[sendasreceipttemplateparams-ref-url]: #sendasreceipttemplateparams
 [response-ref-url]: #response
 [errorresponse-ref-url]: #errorresponse
 [custom-payload-ref-url]: #sendasparams-1
