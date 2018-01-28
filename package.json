@@ -1,12 +1,15 @@
 {
   "name": "@messageflow/send-as",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Utility library for Facebook Messenger's Send API in Node.js",
   "keywords": [
     "facebook-messenger",
     "messenger",
+    "messenger-api",
+    "messenger-bot",
     "messenger-send-api",
     "node",
+    "send-api",
     "send-as",
     "send-as-button-template",
     "send-as-generic-template",
