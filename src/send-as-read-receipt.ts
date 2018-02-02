@@ -16,7 +16,7 @@ import { fetchAsJson } from 'fetch-as';
 export async function sendAsReadReceipt({
   url,
   recipient,
-  options = {},
+  options = {} as RequestInit,
 }: SendAsReadReceiptParams) {
   try {
     const fetchOpts = {
@@ -35,7 +35,6 @@ export async function sendAsReadReceipt({
        * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
        */
       body: JSON.stringify({
-        ...(options.body || {}),
         recipient,
         sender_action: 'mark_seen',
       }),

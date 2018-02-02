@@ -57,7 +57,7 @@ export async function sendAs({
   message,
   notificationType,
   typingDelay,
-  options = {},
+  options = {} as RequestInit,
 }: SendAsParams) {
   try {
     if (typeof url !== 'string' || !url.length) {
@@ -89,7 +89,6 @@ export async function sendAs({
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        ...(options.body || {}),
         recipient,
         message,
         messaging_type: 'RESPONSE',
@@ -135,4 +134,5 @@ export * from './send-as-read-receipt';
 export * from './send-as-receipt-template';
 export * from './send-as-text';
 export * from './send-as-typing-bubble';
+
 export default sendAs;

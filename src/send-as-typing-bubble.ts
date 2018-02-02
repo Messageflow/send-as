@@ -18,7 +18,7 @@ export async function sendAsTypingBubble({
   url,
   recipient,
   showTyping = true,
-  options = {},
+  options = {} as RequestInit,
 }: SendAsTypingBubbleParams) {
   try {
     const fetchOpts = {
@@ -37,7 +37,6 @@ export async function sendAsTypingBubble({
        * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
        */
       body: JSON.stringify({
-        ...(options.body || {}),
         recipient,
         sender_action: showTyping ? 'typing_on' : 'typing_off',
       }),
