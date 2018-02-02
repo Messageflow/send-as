@@ -44,6 +44,34 @@ This simple utility library makes sending all these types of messages easier but
 
 ## Table of contents
 
+  - [Pre-requisites](#pre-requisites)
+  - [Setup](#setup)
+    - [Install](#install)
+    - [Usage](#usage)
+      - [Node.js](#nodejs)
+      - [Native ES modules or TypeScript](#native-es-modules-or-typescript)
+  - [API Reference](#api-reference)
+    - [Recipient](#recipient)
+    - [SendAsParams](#sendasparams)
+    - [SendAsReadReceiptParams](#sendasreadreceiptparams)
+    - [SendAsTypingBubbleParams](#sendastypingbubbleparams)
+    - [SendAsTextParams](#sendastextparams)
+    - [SendAsQuickReplyParams](#sendasquickreplyparams)
+    - [SendAsButtonTemplateParams](#sendasbuttontemplateparams)
+    - [SendAsGenericTemplateParams](#sendasgenerictemplateparams)
+    - [SendAsReceiptTemplateParams](#sendasreceipttemplateparams)
+    - [Response](#response)
+    - [ErrorResponse](#errorresponse)
+    - [sendAs(params)](#sendasparams)
+    - [sendAsReadReceipt(params)](#sendasreadreceiptparams)
+    - [sendAsTypingBubble(params)](#sendastypingbubbleparams)
+    - [sendAsText(params)](#sendastextparams)
+    - [sendAsQuickReply(params)](#sendasquickreplyparams)
+    - [sendAsButtonTemplate(params)](#sendasbuttontemplateparams)
+    - [sendAsGenericTemplate(params)](#sendasgenerictemplateparams)
+    - [sendAsReceiptTemplate(params)](#sendasreceipttemplateparams)
+  - [License](#license)
+
 ## Pre-requisites
 
 - [Node.js][node-js-url] >= 8.9.0
@@ -98,7 +126,11 @@ void async function demoSendAsCustomPayload() {
         },
       },
     };
-    const d = await sendAs(recipient, message);
+    const d = await sendAs({
+      message,
+      recipient,
+      url: '<FACEBOOK_GRAPH_URL>/me/messages?access_token=<FACEBOOK_PAGE_ACCESS_TOKEN>',
+    });
 
     assert.deepEqual(d, {
       message_id: 'mid.$cAAJsujCd2ORj_1qmrFdzhVa-4cvO',
@@ -148,7 +180,11 @@ void async function demoSendAsCustomPayload() {
         },
       },
     };
-    const d = await sendAs(recipient, message);
+    const d = await sendAs({
+      message,
+      recipient,
+      url: '<FACEBOOK_GRAPH_URL>/me/messages?access_token=<FACEBOOK_PAGE_ACCESS_TOKEN>',
+    });
 
     assert.deepEqual(d, {
       message_id: 'mid.$cAAJsujCd2ORj_1qmrFdzhVa-4cvO',
