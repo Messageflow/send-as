@@ -1,6 +1,6 @@
 {
   "name": "@messageflow/send-as",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Utility library for Facebook Messenger's Send API in Node.js",
   "keywords": [
     "facebook-messenger",
@@ -53,10 +53,9 @@
     "@types/node-fetch": "^1.6.7",
     "babel-cli": "^6.26.0",
     "babel-plugin-idx": "^2.2.0",
-    "babel-plugin-transform-function-bind": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-minify": "^0.2.0",
+    "babel-preset-minify": "^0.3.0",
     "cross-env": "^5.1.1",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
