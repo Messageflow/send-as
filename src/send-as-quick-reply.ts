@@ -13,7 +13,7 @@ export declare interface MessageQuickReplies {
   image_url?: string; /** Minimum 24px x 24px. Larger image will be cropped and resized */
 }
 export declare interface SendAsQuickReplyMessage {
-  text: 'text' | 'attachment';
+  text: string;
   attachment?: MessageAttachment;
   quick_replies: MessageQuickReplies[]; /** Up to 11 quick replies */
 }
