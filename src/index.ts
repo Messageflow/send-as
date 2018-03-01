@@ -61,22 +61,22 @@ export async function sendAs({
 }: SendAsParams) {
   try {
     if (typeof url !== 'string' || !url.length) {
-      throw new TypeError('url is missing');
+      throw new TypeError('Param params[url] is missing');
     }
 
     if (recipient == null) {
-      throw new TypeError('recipient is undefined');
+      throw new TypeError('Param params[recipient] is undefined');
     }
 
     if (
       typeof (recipient && recipient.id) !== 'string'
         || !((recipient && recipient.id).length)
     ) {
-      throw new TypeError('recipient[id] is missing');
+      throw new TypeError('Param params[recipient][id] is missing');
     }
 
     if (message == null) {
-      throw new TypeError('message is undefined');
+      throw new TypeError('Param params[message] is undefined');
     }
 
     const fetchOpts = {

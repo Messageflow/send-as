@@ -29,7 +29,7 @@ describe('send-as', () => {
       });
     } catch (e) {
       expect(e instanceof TypeError).toBe(true);
-      expect(e.message).toBe('url is missing');
+      expect(e.message).toBe('Param params[url] is missing');
     }
   });
 
@@ -42,7 +42,7 @@ describe('send-as', () => {
       });
     } catch (e) {
       expect(e instanceof TypeError).toBe(true);
-      expect(e.message).toBe('recipient is undefined');
+      expect(e.message).toBe('Param params[recipient] is undefined');
     }
   });
 
@@ -57,7 +57,7 @@ describe('send-as', () => {
       });
     } catch (e) {
       expect(e instanceof TypeError).toBe(true);
-      expect(e.message).toBe('recipient[id] is missing');
+      expect(e.message).toBe('Param params[recipient][id] is missing');
     }
   });
 
@@ -72,7 +72,7 @@ describe('send-as', () => {
       });
     } catch (e) {
       expect(e instanceof TypeError).toBe(true);
-      expect(e.message).toBe('message is undefined');
+      expect(e.message).toBe('Param params[message] is undefined');
     }
   });
 

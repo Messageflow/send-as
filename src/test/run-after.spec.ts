@@ -9,7 +9,7 @@ describe('run-after', () => {
       await runAfter(NaN);
     } catch (e) {
       expect(e instanceof TypeError).toBe(true);
-      expect(e.message).toBe('after is not a number');
+      expect(e.message).toBe('Param after is not a number');
     }
   });
 
