@@ -12,12 +12,16 @@ npm-debug.log*
 yarn-error.log*
 
 # folders
-./test*/
 coverage*/
+dist*/
 node_modules/
+test*/
 
 # .js files
 *.d.ts*
 *.js
 *.jsx
 gulpfile*.js
+
+# Do not ignore
+!**/json.d.ts
