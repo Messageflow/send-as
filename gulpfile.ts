@@ -1,13 +1,13 @@
 // @ts-check
 
 /** Import project dependencies */
-import * as del from 'del';
-import * as gulp from 'gulp';
-import * as babel from 'gulp-babel';
-import * as sq from 'gulp-sequence';
+import del from 'del';
+import gulp from 'gulp';
+import babel from 'gulp-babel';
+import sq from 'gulp-sequence';
 import lint from 'gulp-tslint';
-import * as ts from 'gulp-typescript';
-import * as tslint from 'tslint';
+import { createProject } from 'gulp-typescript';
+import { Linter } from 'tslint';
 
 /** Setting up */
 const isProd = process.env.NODE_ENV === 'production';
@@ -62,7 +62,7 @@ gulp.task('lint', () =>
         isProd ? '.prod' : ''
       }.json`,
       formatter: 'stylish',
-      program: tslint.Linter.createProgram('./tsconfig.json'),
+      program: Linter.createProgram('./tsconfig.json'),
     }))
     .pipe(lint.report()));
 
@@ -71,7 +71,7 @@ gulp.task('ts', () =>
     `${SRC}/**/*.ts*`,
     ...IGNORE_DIR.map(n => `${isProd ? '!' : ''}${n}/**/*.ts*`),
   ])
-    .pipe(ts.createProject('./tsconfig.json')())
+    .pipe(createProject('./tsconfig.json')())
     .pipe(gulp.dest(TMP)));
 
 gulp.task('babel', () =>
