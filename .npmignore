@@ -6,3 +6,6 @@
 !**/json.d.ts
 !/*.d.ts
 !/*.js
+
+# But but these
+gulpfile.js
