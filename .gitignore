@@ -21,7 +21,7 @@ test*/
 *.d.ts*
 *.js
 *.jsx
-gulpfile*.js
 
 # Do not ignore
 !**/json.d.ts
+!gulpfile.js
