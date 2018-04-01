@@ -50,6 +50,7 @@
     "@types/node": "^9.6.1",
     "@types/node-fetch": "^1.6.7",
     "babel-plugin-idx": "^2.2.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "cross-env": "^5.1.4",
     "gulp": "^4.0.0",

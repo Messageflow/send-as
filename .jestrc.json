@@ -17,12 +17,7 @@
         ],
         "plugins": [
           "babel-plugin-idx",
-          [
-            "transform-object-rest-spread",
-            {
-              "useBuiltIns": true
-            }
-          ]
+          ["transform-object-rest-spread", { "useBuiltIns": true }]
         ]
       }
     }
