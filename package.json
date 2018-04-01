@@ -1,6 +1,6 @@
 {
   "name": "@messageflow/send-as",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Utility library for Facebook Messenger's Send API in Node.js",
   "keywords": [
     "facebook-messenger",
@@ -71,6 +71,6 @@
     "npm": ">= 5.5.1"
   },
   "publishConfig": {
-    "access": true
+    "access": "public"
   }
 }
