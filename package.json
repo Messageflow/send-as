@@ -45,7 +45,7 @@
     "fetch-as": "^0.4.0"
   },
   "devDependencies": {
-    "@messageflow/build": "0.0.5",
+    "@messageflow/build": "0.0.8",
     "@types/jest": "^22.2.2",
     "@types/node": "^9.6.1",
     "@types/node-fetch": "^1.6.7",
