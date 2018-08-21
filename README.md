@@ -12,16 +12,15 @@
 [![Version][version-badge]][version-url]
 [![Downloads][downloads-badge]][downloads-url]
 [![MIT License][mit-license-badge]][mit-license-url]
+[![Code of Conduct][coc-badge]][coc-url]
+
 [![Dependency Status][daviddm-badge]][daviddm-url]
 [![NSP Status][nsp-badge]][nsp-url]
-
-[![Code of Conduct][coc-badge]][coc-url]
 [![Codecov][codecov-badge]][codecov-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
 
 [![codebeat-badge]][codebeat-url]
 [![codacy-badge]][codacy-url]
-[![inch-badge]][inch-url]
 
 > Facebook Messenger [Send API][fb-send-api-url] is the main API used to send messages to users. Besides sending plain text messages, the API allows one to send:-
 
@@ -44,33 +43,33 @@ This simple utility library makes sending all these types of messages easier but
 
 ## Table of contents
 
-  - [Pre-requisites](#pre-requisites)
-  - [Setup](#setup)
-    - [Install](#install)
-    - [Usage](#usage)
-      - [Node.js](#nodejs)
-      - [Native ES modules or TypeScript](#native-es-modules-or-typescript)
-  - [API Reference](#api-reference)
-    - [Recipient](#recipient)
-    - [SendAsParams](#sendasparams)
-    - [SendAsReadReceiptParams](#sendasreadreceiptparams)
-    - [SendAsTypingBubbleParams](#sendastypingbubbleparams)
-    - [SendAsTextParams](#sendastextparams)
-    - [SendAsQuickReplyParams](#sendasquickreplyparams)
-    - [SendAsButtonTemplateParams](#sendasbuttontemplateparams)
-    - [SendAsGenericTemplateParams](#sendasgenerictemplateparams)
-    - [SendAsReceiptTemplateParams](#sendasreceipttemplateparams)
-    - [Response](#response)
-    - [ErrorResponse](#errorresponse)
-    - [sendAs(params)](#sendasparams)
-    - [sendAsReadReceipt(params)](#sendasreadreceiptparams)
-    - [sendAsTypingBubble(params)](#sendastypingbubbleparams)
-    - [sendAsText(params)](#sendastextparams)
-    - [sendAsQuickReply(params)](#sendasquickreplyparams)
-    - [sendAsButtonTemplate(params)](#sendasbuttontemplateparams)
-    - [sendAsGenericTemplate(params)](#sendasgenerictemplateparams)
-    - [sendAsReceiptTemplate(params)](#sendasreceipttemplateparams)
-  - [License](#license)
+- [Pre-requisites](#pre-requisites)
+- [Setup](#setup)
+  - [Install](#install)
+  - [Usage](#usage)
+    - [Node.js](#nodejs)
+    - [Native ES modules or TypeScript](#native-es-modules-or-typescript)
+- [API Reference](#api-reference)
+  - [Recipient](#recipient)
+  - [SendAsParams](#sendasparams)
+  - [SendAsReadReceiptParams](#sendasreadreceiptparams)
+  - [SendAsTypingBubbleParams](#sendastypingbubbleparams)
+  - [SendAsTextParams](#sendastextparams)
+  - [SendAsQuickReplyParams](#sendasquickreplyparams)
+  - [SendAsButtonTemplateParams](#sendasbuttontemplateparams)
+  - [SendAsGenericTemplateParams](#sendasgenerictemplateparams)
+  - [SendAsReceiptTemplateParams](#sendasreceipttemplateparams)
+  - [Response](#response)
+  - [ErrorResponse](#errorresponse)
+  - [sendAs(params)](#sendasparams)
+  - [sendAsReadReceipt(params)](#sendasreadreceiptparams)
+  - [sendAsTypingBubble(params)](#sendastypingbubbleparams)
+  - [sendAsText(params)](#sendastextparams)
+  - [sendAsQuickReply(params)](#sendasquickreplyparams)
+  - [sendAsButtonTemplate(params)](#sendasbuttontemplateparams)
+  - [sendAsGenericTemplate(params)](#sendasgenerictemplateparams)
+  - [sendAsReceiptTemplate(params)](#sendasreceipttemplateparams)
+- [License](#license)
 
 ## Pre-requisites
 
@@ -199,8 +198,8 @@ void async function demoSendAsCustomPayload() {
 ## API Reference
 
 ### Recipient
-  
-  - `id` <[string][string-mdn-url]> PSID of the message recipient.
+
+- `id` <[string][string-mdn-url]> PSID of the message recipient.
 
 ### SendAsParams
 
@@ -348,70 +347,70 @@ void async function demoSendAsCustomPayload() {
 
 ### Response
 
-  - `recipient_id` <[string][string-mdn-url]> Unique ID for the user which is usually the `PSID`.
-  - `message_id` <[string][string-mdn-url]> Unique ID for the message.
+- `recipient_id` <[string][string-mdn-url]> Unique ID for the user which is usually the `PSID`.
+- `message_id` <[string][string-mdn-url]> Unique ID for the message.
 
 ### ErrorResponse
 
-  - `error` <[Object][object-mdn-url]> Error object when a request fails.
-    - `message` <[string][string-mdn-url]> Error message.
-    - `type` <[string][string-mdn-url]> Error type.
-    - `code` <[number][number-mdn-url]> Error code.
-    - `fbtrace_id` <[string][string-mdn-url]> Unique ID for tracing the error request.
+- `error` <[Object][object-mdn-url]> Error object when a request fails.
+  - `message` <[string][string-mdn-url]> Error message.
+  - `type` <[string][string-mdn-url]> Error type.
+  - `code` <[number][number-mdn-url]> Error code.
+  - `fbtrace_id` <[string][string-mdn-url]> Unique ID for tracing the error request.
 
 ___
 
 ### sendAs(params)
 
-  - `params` <[SendAsParams][sendasparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsParams][sendasparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsReadReceipt(params)
 
-  - `params` <[SendAsReadReceiptParams][sendasreadreceiptparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsReadReceiptParams][sendasreadreceiptparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsTypingBubble(params)
 
-  - `params` <[SendAsTypingBubbleParams][sendastypingbubbleparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for its recipient.
+- `params` <[SendAsTypingBubbleParams][sendastypingbubbleparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Object][object-mdn-url]>> Promise which resolves with a JSON object containing identifiers for its recipient.
 
 ### sendAsText(params)
 
-  - `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsTextParams][sendastextparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsQuickReply(params)
 
-  - `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsQuickReplyParams][sendasquickreplyparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsButtonTemplate(params)
 
-  - `params` <[SendAsButtonTemplateParams][sendasbuttontemplateparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsButtonTemplateParams][sendasbuttontemplateparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsGenericTemplate(params)
 
-  - `params` <[SendAsGenericTemplateParams][sendasgenerictemplateparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsGenericTemplateParams][sendasgenerictemplateparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
 ### sendAsReceiptTemplate(params)
 
-  - `params` <[SendAsReceiptTemplateParams][sendasreceipttemplateparams-ref-url]> Parameters required to call the method.
-  - returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
+- `params` <[SendAsReceiptTemplateParams][sendasreceipttemplateparams-ref-url]> Parameters required to call the method.
+- returns: <[Promise][promise-mdn-url]<[Response][response-ref-url]>> Promise which resolves with a JSON object containing identifiers for the message and its recipient.
 
 The method throws an [ErrorResponse][errorresponse-ref-url] when the request is not a successful.
 
@@ -419,8 +418,7 @@ The method throws an [ErrorResponse][errorresponse-ref-url] when the request is 
 
 [MIT License](https://motss.mit-license.org/) © Rong Sen Ng
 
-
-
+<!-- References -->
 [typescript-url]: https://github.com/Microsoft/TypeScript
 [node-js-url]: https://nodejs.org
 [npm-url]: https://www.npmjs.com
@@ -456,40 +454,37 @@ The method throws an [ErrorResponse][errorresponse-ref-url] when the request is 
 [send-api-quick-reply-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api/quick-replies#quick_reply
 [send-api-url-button-url]: https://developers.facebook.com/docs/messenger-platform/send-api-reference/url-button
 
-
 [nodei-badge]: https://nodei.co/npm/@messageflow/send-as.png?downloads=true&downloadRank=true&stars=true
 
 [travis-badge]: https://img.shields.io/travis/Messageflow/send-as.svg?style=flat-square
 
+<!-- Badges -->
 [version-badge]: https://img.shields.io/npm/v/@messageflow/send-as.svg?style=flat-square
 [downloads-badge]: https://img.shields.io/npm/dm/@messageflow/send-as.svg?style=flat-square
 [mit-license-badge]: https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square
-[nsp-badge]: https://nodesecurity.io/orgs/messageflow/projects/450aa942-cae3-448f-a637-c380767c68f3/badge
-[daviddm-badge]: https://img.shields.io/david/messageflow/send-as.svg?style=flat-square
-
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+
+[daviddm-badge]: https://img.shields.io/david/messageflow/send-as.svg?style=flat-square
+[nsp-badge]: https://nodesecurity.io/orgs/messageflow/projects/450aa942-cae3-448f-a637-c380767c68f3/badge
 [codecov-badge]: https://codecov.io/gh/Messageflow/send-as/branch/master/graph/badge.svg?style=flat-square
 [coveralls-badge]: https://coveralls.io/repos/github/Messageflow/send-as/badge.svg?branch=master&style=flat-square
 
 [codebeat-badge]: https://codebeat.co/badges/cb737f7f-0fc7-4d80-afdc-41b0baf53f42?style=flat-square
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/dea8f78a242b4fe092c28223b960c951?style=flat-square
-[inch-badge]: http://inch-ci.org/github/Messageflow/send-as.svg?branch=master&style=flat-square
 
-
-
+<!-- Links -->
 [nodei-url]: https://nodei.co/npm/@messageflow/send-as
 
 [travis-url]: https://travis-ci.org/Messageflow/send-as
 [version-url]: https://npmjs.org/package/@messageflow/send-as
 [downloads-url]: http://www.npmtrends.com/@messageflow/send-as
 [mit-license-url]: https://github.com/Messageflow/send-as/blob/master/LICENSE
-[nsp-url]: https://nodesecurity.io/orgs/messageflow/projects/450aa942-cae3-448f-a637-c380767c68f3
-[daviddm-url]: https://david-dm.org/Messageflow/send-as
-
 [coc-url]: https://github.com/Messageflow/send-as/blob/master/CODE_OF_CONDUCT.md
+
+[daviddm-url]: https://david-dm.org/Messageflow/send-as
+[nsp-url]: https://nodesecurity.io/orgs/messageflow/projects/450aa942-cae3-448f-a637-c380767c68f3
 [codecov-url]: https://codecov.io/gh/Messageflow/send-as
 [coveralls-url]: https://coveralls.io/github/Messageflow/send-as?branch=master
 
 [codebeat-url]: https://codebeat.co/projects/github-com-messageflow-send-as-master
 [codacy-url]: https://www.codacy.com/app/motss/send-as?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Messageflow/send-as&amp;utm_campaign=Badge_Grade
-[inch-url]: http://inch-ci.org/github/Messageflow/send-as
