@@ -1,54 +1,47 @@
 // @ts-check
 
-export declare interface SendAsTypingBubbleParams {
-  url: string;
-  recipient: FbEventRecipient;
-  options?: RequestInit;
+declare interface SendAsTypingBubbleParams extends Pick<BaseParams, 'url'|'recipient'|'options'> {
   showTyping?: boolean;
 }
+declare type TypingBubbleReturnType = ReadReceiptReturnType;
 
-/** Import typings */
-import { RequestInit } from 'node-fetch';
-import { FbEventRecipient } from './';
+import { BaseParams, RecipientId } from '.';
 
-/** Import project dependencies */
 import { fetchAsJson } from 'fetch-as';
+import { ReadReceiptReturnType } from './send-as-read-receipt';
 
 export async function sendAsTypingBubble({
   url,
   recipient,
+  options,
   showTyping = true,
-  options = {} as RequestInit,
-}: SendAsTypingBubbleParams) {
+}: SendAsTypingBubbleParams): Promise<RecipientId> {
   try {
-    const fetchOpts = {
-      ...options,
+    const d = await fetchAsJson<TypingBubbleReturnType>(url, {
       method: 'POST',
-      compress: options.compress || true,
-      timeout: options.timeout || 599e3,
+      compress: true,
+      timeout: 599e3,
       headers: {
-        ...(options.headers || {}),
         'content-type': 'application/json',
       },
       /**
        * NOTE:
        * When using sender_action,
        * recipient should be the only other property set in the request.
-       * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
+       * {@link http://bit.do/eu6np|Send API - Messenger Platform}
        */
       body: JSON.stringify({
         recipient,
         sender_action: showTyping ? 'typing_on' : 'typing_off',
       }),
-    };
-    const d = await fetchAsJson(url, fetchOpts);
+      ...(options == null ? {} : options),
+    });
 
-    /** NOTE: Throw error response */
     if (d.status > 399) {
       throw d.error;
     }
 
-    return d.data;
+    return d.data!;
   } catch (e) {
     throw e;
   }

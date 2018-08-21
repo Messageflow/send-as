@@ -1,52 +1,44 @@
 // @ts-check
 
-export declare interface SendAsReadReceiptParams {
-  url: string;
-  recipient: FbEventRecipient;
-  options?: RequestInit;
+type SendAsReadReceiptParams = Pick<BaseParams, 'url'|'recipient'|'options'>;
+
+export interface ReadReceiptReturnType extends FetchAsReturnType {
+  data?: RecipientId;
+  error?: SendAsReturnError;
 }
 
-/** Import typings */
-import { RequestInit } from 'node-fetch';
-import { FbEventRecipient } from './';
+import { BaseParams, RecipientId, SendAsReturnError } from './';
 
-/** Import project dependencies */
-import { fetchAsJson } from 'fetch-as';
+import { fetchAsJson, FetchAsReturnType } from 'fetch-as';
 
 export async function sendAsReadReceipt({
   url,
   recipient,
-  options = {} as RequestInit,
-}: SendAsReadReceiptParams) {
+  options,
+}: SendAsReadReceiptParams): Promise<RecipientId> {
   try {
-    const fetchOpts = {
-      ...options,
+    const d = await fetchAsJson<ReadReceiptReturnType>(url, {
       method: 'POST',
-      compress: options.compress || true,
-      timeout: options.timeout || 599e3,
+      compress: true,
+      timeout: 599e3,
       headers: {
-        ...(options.headers || {}),
         'content-type': 'application/json',
       },
       /**
        * NOTE:
        * When using sender_action,
        * recipient should be the only other property set in the request.
-       * {@link https://goo.gl/oE1ZhB|Send API - Messenger Platform}
+       * {@link http://bit.do/eu6np|Send API - Messenger Platform}
        */
-      body: JSON.stringify({
-        recipient,
-        sender_action: 'mark_seen',
-      }),
-    };
-    const d = await fetchAsJson(url, fetchOpts);
+      body: JSON.stringify({ recipient, sender_action: 'mark_seen' }),
+      ...(options == null ? {} : options),
+    });
 
-    /** NOTE: Throw error response */
     if (d.status > 399) {
       throw d.error;
     }
 
-    return d.data;
+    return d.data!;
   } catch (e) {
     throw e;
   }

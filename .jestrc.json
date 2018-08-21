@@ -3,26 +3,15 @@
     "ts-jest": {
       "babelConfig": {
         "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              },
-              "spec": true,
-              "modules": false,
-              "useBuiltIns": true
-            }
-          ]
+          ["env", {
+            "targets": { "node": "current" },
+            "spec": true,
+            "modules": false,
+            "useBuiltIns": true
+          }]
         ],
         "plugins": [
-          "babel-plugin-idx",
-          [
-            "transform-object-rest-spread",
-            {
-              "useBuiltIns": true
-            }
-          ]
+          ["transform-object-rest-spread", { "useBuiltIns": true }]
         ]
       }
     }
@@ -41,7 +30,7 @@
   "collectCoverageFrom": [
     "!**/node_modules/**",
     "!**/src/demo/**/*.{ts|tsx}",
-    "!**/src/test/**/*.{ts|tsx}",
+    "!**/src/test*/**/*.{ts|tsx}",
     "**/src/**/*.{ts|tsx}"
   ],
   "verbose": true,
@@ -50,10 +39,10 @@
     "<rootDir>/src/"
   ],
   "transform": {
-    "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    "^.+\\.tsx?$": "ts-jest"
   },
   "testMatch": [
-    "**/src/test/**/*.spec.(ts|tsx)"
+    "**/src/test*/**/*.spec.(ts|tsx)"
   ],
   "moduleFileExtensions": [
     "ts",
