@@ -24,3 +24,4 @@ test*/
 *.mjs
 
 # Do not ignore
+!.jest.env

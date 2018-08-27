@@ -10,7 +10,7 @@ import config, {
 } from './config';
 import * as expected from './expected';
 
-describe('send-as', () => {
+describe.skip('send-as', () => {
   beforeEach(async () => {
     await nocky({
       url: TEST_URL,

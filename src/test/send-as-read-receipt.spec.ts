@@ -1,7 +1,7 @@
 // @ts-check
 
 /** Import other modules */
-import sendAsReadReceipt from '../send-as-read-receipt';
+import { sendAsReadReceipt } from '../';
 import config, {
   killNocky,
   nocky,
@@ -10,7 +10,7 @@ import config, {
 } from './config';
 import * as expected from './expected';
 
-describe('send-as-read-receipt', () => {
+describe.skip('send-as-read-receipt', () => {
   beforeEach(async () => {
     await nocky({
       url: TEST_URL,
