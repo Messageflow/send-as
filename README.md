@@ -6,21 +6,24 @@
 
 <hr />
 
-[![NPM][nodei-badge]][nodei-url]
+[![Version][version-badge]][version-url]
+[![Node version][node-version-badge]][node-version-url]
+[![MIT License][mit-license-badge]][mit-license-url]
+
+[![Downloads][downloads-badge]][downloads-url]
+[![Total downloads][total-downloads-badge]][downloads-url]
+[![Packagephobia][packagephobia-badge]][packagephobia-url]
+[![Bundlephobia][bundlephobia-badge]][bundlephobia-url]
 
 [![Build Status][travis-badge]][travis-url]
-[![Version][version-badge]][version-url]
-[![Downloads][downloads-badge]][downloads-url]
-[![MIT License][mit-license-badge]][mit-license-url]
-[![Code of Conduct][coc-badge]][coc-url]
-
+[![CircleCI][circleci-badge]][circleci-url]
 [![Dependency Status][daviddm-badge]][daviddm-url]
-[![NSP Status][nsp-badge]][nsp-url]
-[![Codecov][codecov-badge]][codecov-url]
+[![codecov][codecov-badge]][codecov-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
 
-[![codebeat-badge]][codebeat-url]
-[![codacy-badge]][codacy-url]
+[![codebeat badge][codebeat-badge]][codebeat-url]
+[![Codacy Badge][codacy-badge]][codacy-url]
+[![Code of Conduct][coc-badge]][coc-url]
 
 > Facebook Messenger [Send API][fb-send-api-url] is the main API used to send messages to users. Besides sending plain text messages, the API allows one to send:-
 
@@ -459,32 +462,40 @@ The method throws an [ErrorResponse][errorresponse-ref-url] when the request is 
 [travis-badge]: https://img.shields.io/travis/Messageflow/send-as.svg?style=flat-square
 
 <!-- Badges -->
-[version-badge]: https://img.shields.io/npm/v/@messageflow/send-as.svg?style=flat-square
-[downloads-badge]: https://img.shields.io/npm/dm/@messageflow/send-as.svg?style=flat-square
-[mit-license-badge]: https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square
-[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[version-badge]: https://flat.badgen.net/npm/v/@messageflow/send-as
+[node-version-badge]: https://flat.badgen.net/npm/node/@messageflow/send-as
+[mit-license-badge]: https://flat.badgen.net/npm/license/@messageflow/send-as
 
-[daviddm-badge]: https://img.shields.io/david/messageflow/send-as.svg?style=flat-square
-[nsp-badge]: https://nodesecurity.io/orgs/messageflow/projects/450aa942-cae3-448f-a637-c380767c68f3/badge
-[codecov-badge]: https://codecov.io/gh/Messageflow/send-as/branch/master/graph/badge.svg?style=flat-square
-[coveralls-badge]: https://coveralls.io/repos/github/Messageflow/send-as/badge.svg?branch=master&style=flat-square
+[downloads-badge]: https://flat.badgen.net/npm/dm/@messageflow/send-as
+[total-downloads-badge]: https://flat.badgen.net/npm/dt/@messageflow/send-as?label=total%20downloads
+[packagephobia-badge]: https://flat.badgen.net/packagephobia/install/@messageflow/send-as
+[bundlephobia-badge]: https://flat.badgen.net/bundlephobia/minzip/@messageflow/send-as
+
+[travis-badge]: https://flat.badgen.net/travis/messageflow/send-as
+[circleci-badge]: https://flat.badgen.net/circleci/github/messageflow/send-as
+[daviddm-badge]: https://flat.badgen.net/david/dep/messageflow/send-as
+[codecov-badge]: https://flat.badgen.net/codecov/c/github/messageflow/send-as?label=codecov
+[coveralls-badge]: https://flat.badgen.net/coveralls/c/github/messageflow/send-as?label=coveralls
 
 [codebeat-badge]: https://codebeat.co/badges/cb737f7f-0fc7-4d80-afdc-41b0baf53f42?style=flat-square
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/dea8f78a242b4fe092c28223b960c951?style=flat-square
+[coc-badge]: https://flat.badgen.net/badge/code%20of/conduct/pink
 
 <!-- Links -->
-[nodei-url]: https://nodei.co/npm/@messageflow/send-as
+[version-url]: https://npmjs.org/package/@messageflow/send-as
+[node-version-url]: https://nodejs.org/en/download
+[mit-license-url]: https://github.com/Messageflow/send-as/blob/master/LICENSE
+
+[downloads-url]: http://www.npmtrends.com/@messageflow/send-as
+[packagephobia-url]: https://packagephobia.now.sh/result?p=%40messageflow%2Fsend-as
+[bundlephobia-url]: https://bundlephobia.com/result?p=@messageflow/send-as
 
 [travis-url]: https://travis-ci.org/Messageflow/send-as
-[version-url]: https://npmjs.org/package/@messageflow/send-as
-[downloads-url]: http://www.npmtrends.com/@messageflow/send-as
-[mit-license-url]: https://github.com/Messageflow/send-as/blob/master/LICENSE
-[coc-url]: https://github.com/Messageflow/send-as/blob/master/CODE_OF_CONDUCT.md
-
+[circleci-url]: https://circleci.com/gh/Messageflow/send-as
 [daviddm-url]: https://david-dm.org/Messageflow/send-as
-[nsp-url]: https://nodesecurity.io/orgs/messageflow/projects/450aa942-cae3-448f-a637-c380767c68f3
 [codecov-url]: https://codecov.io/gh/Messageflow/send-as
 [coveralls-url]: https://coveralls.io/github/Messageflow/send-as?branch=master
 
 [codebeat-url]: https://codebeat.co/projects/github-com-messageflow-send-as-master
 [codacy-url]: https://www.codacy.com/app/motss/send-as?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Messageflow/send-as&amp;utm_campaign=Badge_Grade
+[coc-url]: https://github.com/Messageflow/send-as/blob/master/CODE_OF_CONDUCT.md

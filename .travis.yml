@@ -5,7 +5,7 @@ node_js:
   - v9
   - v10
 before_script:
-  npm install coveralls codecov
+  npm i -g npm@latest coveralls codecov
 script:
   - npm cit --quiet
 after_success:

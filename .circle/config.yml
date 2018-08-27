@@ -28,7 +28,7 @@ jobs:
             - v{{ .Environment.CIRCLE_BUILD_NUM }}-npm-cache-master-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_JOB }}
       - run:
           name: Install latest NPM
-          command: npm i -g npm
+          command: npm i -g npm@latest
       - run:
           name: Install dependencies
           command: npm cit --quiet
