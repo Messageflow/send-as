@@ -471,11 +471,12 @@ The method throws an [ErrorResponse][errorresponse-ref-url] when the request is 
 [packagephobia-badge]: https://flat.badgen.net/packagephobia/install/@messageflow/send-as
 [bundlephobia-badge]: https://flat.badgen.net/bundlephobia/minzip/@messageflow/send-as
 
-[travis-badge]: https://flat.badgen.net/travis/messageflow/send-as
-[circleci-badge]: https://flat.badgen.net/circleci/github/messageflow/send-as
-[daviddm-badge]: https://flat.badgen.net/david/dep/messageflow/send-as
-[codecov-badge]: https://flat.badgen.net/codecov/c/github/messageflow/send-as?label=codecov
-[coveralls-badge]: https://flat.badgen.net/coveralls/c/github/messageflow/send-as?label=coveralls
+[travis-badge]: https://flat.badgen.net/travis/Messageflow/send-as
+[circleci-badge]: https://flat.badgen.net/circleci/github/Messageflow/send-as
+[daviddm-badge]: https://flat.badgen.net/david/dep/Messageflow/send-as
+[codecov-badge]: https://flat.badgen.net/codecov/c/github/Messageflow/send-as
+[coveralls-badge]: 
+https://flat.badgen.net/coveralls/c/github/Messageflow/send-as
 
 [codebeat-badge]: https://codebeat.co/badges/cb737f7f-0fc7-4d80-afdc-41b0baf53f42?style=flat-square
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/dea8f78a242b4fe092c28223b960c951?style=flat-square
