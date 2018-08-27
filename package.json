@@ -60,8 +60,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "env-cmd": "^8.0.2",
-    "idx": "^2.4.0",
-    "is-url-superb": "^2.0.0",
     "jest": "^23.5.0",
     "nock": "^9.6.1",
     "ts-jest": "^23.1.4",
