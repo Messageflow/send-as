@@ -210,7 +210,7 @@ async function preSendFn<T = {}, U = SendAsReturnError>({
      * recipient should be the only other property set in the request.
      * {@link http://bit.do/eu6np|Send API - Messenger Platform}
      */
-    ...(options == null ? {} : options),
+    ...options, /** Hardly null */
   });
 
   if (d.status > 399) {
@@ -255,20 +255,20 @@ export async function sendAs<T = {}>({
       await sendAsTypingBubble({ url, recipient, options, showTyping: true });
       await new Promise(yay => setTimeout(yay, typingDelay == null ? 5e2 : +typingDelay));
 
-      const d = await fetchAsJson<SendAsData, SendAsReturnError>(url, {
-        method: 'POST',
-        compress: true,
-        timeout: 599e3,
-        headers: {
-          'content-type': 'application/json',
+      const d = await preSendFn<SendAsData, SendAsReturnError>({
+        url,
+        options: {
+          compress: true,
+          timeout: 599e3,
+          body: JSON.stringify({
+            recipient,
+            message,
+            messaging_type: 'RESPONSE',
+            notification_type: notificationType == null
+              ? NotificationType.NO_PUSH
+              : notificationType,
+          }),
         },
-        body: JSON.stringify({
-          recipient,
-          message,
-          messaging_type: 'RESPONSE',
-          notification_type: notificationType || NotificationType.NO_PUSH,
-        }),
-        ...(options == null ? {} : options),
       });
 
       /** NOTE: Turn typing indicator off */

@@ -2,18 +2,46 @@
 
 import { MessengerId } from '..';
 
-import { sendAsTypingBubble } from '..';
-import config, {
-  // killNocky,
-  // nocky,
-  // TEST_API_VERSION,
-  // TEST_URL,
-} from './config';
-import * as expected from './expected';
+import nock from 'nock';
 
-describe('send-as-text', () => {
-  // beforeAll(() => {});
-  const url = `${process.env.API_URL}/sendAsText`;
+import { sendAsTypingBubble } from '..';
+import { successMessageId } from './expected';
+
+function timeoutNock(url) {
+  return nock(url)
+    .persist(true)
+    // .log(console.log)
+    .post(uri => /\/sendAsTypingBubble\/timeout/i.test(uri))
+    .delay(5e3)
+    .reply(200, () => {
+      return {};
+    });
+}
+
+function successNock(url, data) {
+  return nock(url)
+    .persist(true)
+    // .log(console.log)
+    .post(uri => /\/sendAsTypingBubble/i.test(uri))
+    .reply(200, () => {
+      return data;
+    });
+}
+
+describe('send-as-typing-bubble', () => {
+  const data = {
+    ...successMessageId,
+  };
+  let nocks: (nock.Scope)[];
+
+  beforeAll(() => {
+    nocks = [
+      timeoutNock(url),
+      successNock(url, data),
+    ];
+  });
+
+  const url = `${process.env.API_URL}/sendAsTypingBubble`;
   const recipient: MessengerId = {
     id: '123',
   };
@@ -72,77 +100,71 @@ describe('send-as-text', () => {
       }
     });
 
-    // it('throws when socket timed out', async () => {
-    //   try {
-    //     await sendAsTypingBubble({
-    //       url,
-    //       recipient,
-    //       showTyping,
-    //     });
-    //   } catch (e) {
-    //     expect(e.type).toStrictEqual('request-timeout');
-    //     expect(e.name).toStrictEqual('FetchError');
-    //     expect(e.name).toStrictEqual(`network timeout at: ${url}/timeout`);
-    //   }
-    // }, 10e3);
+    it('throws when socket timed out', async () => {
+      try {
+        await sendAsTypingBubble({
+          recipient,
+          showTyping,
+          url: `${url}/timeout`,
+          options: { timeout: 3e3 },
+        });
+      } catch (e) {
+        expect(e.type).toStrictEqual('request-timeout');
+        expect(e.name).toStrictEqual('FetchError');
+        expect(e.message).toStrictEqual(`network timeout at: ${url}/timeout`);
+      }
+    }, 10e3);
 
   });
 
   describe('ok', () => {
-    // it();
+    it('returns', async () => {
+      try {
+        const d = await sendAsTypingBubble({
+          url,
+          recipient,
+          showTyping: true,
+        });
+
+        expect(d).toStrictEqual(data);
+      } catch (e) {
+        throw e;
+      }
+    });
+
+    it(`returns with 'showTyping' set to 'false'`, async () => {
+      try {
+        const d = await sendAsTypingBubble({
+          url,
+          recipient,
+          showTyping: false,
+        });
+
+        expect(d).toStrictEqual(data);
+      } catch (e) {
+        throw e;
+      }
+    });
+
+    it(`returns with defined 'options'`, async () => {
+      try {
+        const d = await sendAsTypingBubble({
+          url,
+          recipient,
+          showTyping: true,
+          options: { timeout: 3e3 },
+        });
+
+        expect(d).toStrictEqual(data);
+      } catch (e) {
+        throw e;
+      }
+    }, 10e3);
 
   });
 
-  // afterAll(() => {});
-  // beforeEach(async () => {
-  //   await nocky({
-  //     url: TEST_URL,
-  //     apiVersion: TEST_API_VERSION,
-  //   });
-  // });
-
-  // afterEach(async () => await killNocky());
-
-  // test('sendAsTypingBubble fails', async () => {
-  //   try {
-  //     const {
-  //       fbGraphApiUrl,
-  //       testReceipientId,
-  //     } = await config();
-
-  //     await sendAsTypingBubble({
-  //       url: `${fbGraphApiUrl}/error`,
-  //       recipient: {
-  //         id: testReceipientId,
-  //       },
-  //     });
-  //   } catch (e) {
-  //     expect(e).toEqual({
-  //       ...expected.missingSenderAction,
-  //     });
-  //   }
-  // });
-
-  // test('sendAsTypingBubble works', async () => {
-  //   try {
-  //     const {
-  //       fbGraphApiUrl,
-  //       testReceipientId,
-  //     } = await config();
-
-  //     const d = await sendAsTypingBubble({
-  //       url: `${fbGraphApiUrl}`,
-  //       recipient: {
-  //         id: testReceipientId,
-  //       },
-  //     });
-
-  //     expect(d).toEqual({
-  //       recipient_id: testReceipientId,
-  //     });
-  //   } catch (e) {
-  //     throw e;
-  //   }
-  // });
-
+  afterAll(() => {
+    nocks.forEach(n => n.persist(false));
+    nock.cleanAll();
+  });
 });
