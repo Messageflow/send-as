@@ -11,3 +11,6 @@ script:
 after_success:
   - 'cat ./coverage/lcov.info | coveralls'
   - 'cat ./coverage/lcov.info | codecov'
+cache:
+  directories:
+    - node_modules
