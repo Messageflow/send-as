@@ -46,6 +46,7 @@ This simple utility library makes sending all these types of messages easier but
 
 ## Table of contents
 
+- [Table of contents](#table-of-contents)
 - [Pre-requisites](#pre-requisites)
 - [Setup](#setup)
   - [Install](#install)
@@ -456,10 +457,6 @@ The method throws an [ErrorResponse][errorresponse-ref-url] when the request is 
 [send-messages-buttons-url]: https://developers.facebook.com/docs/messenger-platform/send-messages/buttons
 [send-api-quick-reply-url]: https://developers.facebook.com/docs/messenger-platform/reference/send-api/quick-replies#quick_reply
 [send-api-url-button-url]: https://developers.facebook.com/docs/messenger-platform/send-api-reference/url-button
-
-[nodei-badge]: https://nodei.co/npm/@messageflow/send-as.png?downloads=true&downloadRank=true&stars=true
-
-[travis-badge]: https://img.shields.io/travis/Messageflow/send-as.svg?style=flat-square
 
 <!-- Badges -->
 [version-badge]: https://flat.badgen.net/npm/v/@messageflow/send-as
